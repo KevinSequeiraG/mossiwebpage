@@ -7,6 +7,13 @@
   background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
 }
 
+.centerLogo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* Social Icons */
 .social-icon {
   display: contents;
@@ -14,8 +21,7 @@
 }
 
 .social-icon a {
-  width: 42px;
-  height: 42px;
+ 
   background: rgba(217, 217, 217, 0.1);
   display: inline-flex;
   border-radius: 50%;
@@ -28,8 +34,6 @@
 
 .social-icon a::before {
   content: "";
-  width: 42px;
-  height: 42px;
   position: absolute;
   background-color: #ffffff;
   border-radius: 50%;
@@ -42,11 +46,110 @@
 }
 
 .social-icon a img {
-  width: 40%;
+  
   z-index: 1;
   transition: 0.3s ease-in-out;
 }
 
 .social-icon a:hover img {
   filter: brightness(0) saturate(100%) invert(0%) sepia(7%) saturate(98%) hue-rotate(346deg) brightness(95%) contrast(86%);
+}
+
+/* Product Cards */
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
+}
+
+:root {
+  --card-height: 65vh;
+  --card-width: calc(var(--card-height) / 1.5);
+}
+
+.card {
+  background: #191c29;
+  width: var(--card-width);
+  height: var(--card-height);
+  padding: 3px;
+  position: relative;
+  border-radius: 6px;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  font-size: 1.5em;
+  color: rgb(88 199 250 / 0%);
+  cursor: pointer;
+}
+
+.cardSize {
+  width: var(--card-width);
+  height: var(--card-height);
+}
+
+.card::before {
+  content: "";
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(var(--rotate), #ffff94, #efb810 43%, #664300);
+  position: absolute;
+  z-index: 0;
+  top: -1%;
+  left: -2%;
+  animation: spin 2.5s linear infinite;
+}
+
+.card::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--card-height) / 6);
+  left: 0;
+  right: 0;
+  z-index: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(calc(var(--card-height) / 6));
+  background-image: linear-gradient(var(--rotate), #ffff94, #efb810 43%, #664300);
+  opacity: 1;
+  transition: opacity .5s;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+/* Footer */
+.MainFooter{
+  position: absolute;
+  width: 100%;
+  height: 15%;
+}
+
+.MainFooter div{
+  position: absolute;
+  bottom: -2rem;
+}
+
+.FooterInfo{
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.footer-texts{
+  position: absolute;
+  bottom: 1.4rem!important;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
