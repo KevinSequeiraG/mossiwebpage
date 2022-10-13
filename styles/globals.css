@@ -14,6 +14,14 @@
   transform: translate(-50%, -50%);
 }
 
+.bgButtonLogin {
+  background-image: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);
+}
+
+.btnButtonForgotPassword {
+  background-image: linear-gradient(to left, #ed6ea0 0%, #ec8c69 100%);
+}
+
 /* Social Icons */
 .social-icon {
   display: contents;
@@ -21,7 +29,7 @@
 }
 
 .social-icon a {
- 
+
   background: rgba(217, 217, 217, 0.1);
   display: inline-flex;
   border-radius: 50%;
@@ -46,7 +54,7 @@
 }
 
 .social-icon a img {
-  
+
   z-index: 1;
   transition: 0.3s ease-in-out;
 }
@@ -130,26 +138,29 @@
 }
 
 /* Footer */
-.MainFooter{
+.MainFooter {
   position: absolute;
   width: 100%;
   height: 15%;
 }
 
-.MainFooter div{
+.MainFooter div {
   position: absolute;
   bottom: -2rem;
 }
 
-.FooterInfo{
+.FooterInfo {
   text-align: center;
   width: 100%;
   height: 100%;
 }
 
-.footer-texts{
+.footer-texts {
   position: absolute;
-  bottom: 1.4rem!important;
+  bottom: 1.4rem !important;
   left: 50%;
   transform: translate(-50%, 0);
 }
+
+/* =======filter: brightness(0) saturate(100%) invert(0%) sepia(7%) saturate(98%) hue-rotate(346deg) brightness(95%) contrast(86%);
+} */
