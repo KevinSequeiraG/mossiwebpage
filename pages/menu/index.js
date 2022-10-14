@@ -31,28 +31,6 @@ const Menu = () => {
         setShowNewCatModal(false);
     }
 
-    const createCategory = () => {
-        const categoryRef = collection(database, `mossy/data/category`);
-        addDoc(categoryRef, {
-            categoryId: categoryId,
-            name: categoryName,
-            description: categoryDescription,
-        })
-            .then(() => {
-                Toast.fire({
-                    icon: "success",
-                    title: "Categoria creada con éxito", //`${t("toastCreateSuccess")}`
-                });
-            })
-            .catch((err) => {
-                console.error(err);
-                Toast.fire({
-                    icon: "error",
-                    title: `${t("toastCreateFail")}`,
-                });
-            });
-    };
-
     const updateCategory = () => {
         let categoryToEdit = doc(
             database,
@@ -126,9 +104,9 @@ const Menu = () => {
     });
 
     return (
-        <div className="relative h-screen overflow-hidden">
+        <div className={`relative ${showNewCatModal ? 'h-screen' : 'h-full'} overflow-hidden`}>
             <NavBar />
-            <div className={`cardsContainer w-full ${showNewCatModal ? 'h-screen' : 'h-full'} py-20 bgMain`}>
+            <div className={`cardsContainer w-full  pt-20 pb-[10rem] bgMain`}>
                 <div className="text-right w-11/12 mr-auto">
                     {showMaintenance ? <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10 mr-2" onClick={() => { setShowNewCatModal(true) }}>Crear nueva categoría</button> : null}
                     <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10" onClick={() => { setShowMaintence(!showMaintenance) }}>{showMaintenance?'Finalizar':'Mantenimiento'}</button>
@@ -147,7 +125,7 @@ const Menu = () => {
                         close
                     </span>
                 </button> */}
-                <NewCategoryModal closeModal={closeModal} />
+                <NewCategoryModal closeModal={closeModal} getCategoryData={getCategoryData}/>
             </div> : null}
         </div>
     )
