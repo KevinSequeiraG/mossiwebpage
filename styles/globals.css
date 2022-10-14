@@ -163,3 +163,23 @@
 
 /* =======filter: brightness(0) saturate(100%) invert(0%) sepia(7%) saturate(98%) hue-rotate(346deg) brightness(95%) contrast(86%);
 } */
+
+.scrollbar {
+  scrollbar-width: 8px !important;
+  scrollbar-color: #e9e9eb !important;
+}
+
+/* For Chrome, EDGE, Opera, Others */
+.scrollbar::-webkit-scrollbar {
+  width: 8px !important;
+  height: 10px !important;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #fff !important;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #e9e9eb !important;
+  border-radius: 50px !important;
+}

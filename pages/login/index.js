@@ -128,7 +128,7 @@ function Login() {
                       onChange={() => setRememberMeChecked(!rememberMeChecked)}
                     />
                     <label
-                      className="inline-block text-black text-[13px] lg:text-[16px]"
+                      className="inline-block text-black text-[13px] lg:text-[16px] cursor-pointer"
                       htmlFor="flexCheckDefault"
                     >
                       Recuérdame
@@ -136,7 +136,7 @@ function Login() {
                   </div>
                   <a
                     onClick={() => setForgotPasswordModal(true)}
-                    className="text-black hover:text-yellow-700 duration-200 transition ease-in-out text-[13px] lg:text-[16px]"
+                    className="text-black hover:text-yellow-700 duration-200 transition ease-in-out text-[13px] lg:text-[16px] cursor-pointer"
                   >
                     Olvidé mi contraseña
                   </a>
