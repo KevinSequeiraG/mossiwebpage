@@ -16,127 +16,127 @@ import {
     deleteDoc,
     updateDoc,
     orderBy,
-  } from "firebase/firestore";
+} from "firebase/firestore";
 import Swal from "sweetalert2";
 
 const Menu = () => {
-    const [showNewCatModal, setShowNewCatModal] = useState(false)
-
-    const closeModal = () => {
-        setShowNewCatModal(false)
-    }
-
+    const [showNewCatModal, setShowNewCatModal] = useState(false);
+    const [showMaintenance, setShowMaintence] = useState(false);
     const [categoryId, setCategoryId] = useState("");
     const [categoryName, setCategoryName] = useState("");
     const [categoryDescription, setCategoryDescription] = useState("");
+    const [categoryData, setCategoryData] = useState([]);
+
+    const closeModal = () => {
+        setShowNewCatModal(false);
+    }
 
     const createCategory = () => {
         const categoryRef = collection(database, `mossy/data/category`);
         addDoc(categoryRef, {
-            categoryId:categoryId, 
+            categoryId: categoryId,
             name: categoryName,
             description: categoryDescription,
         })
-          .then(() => {
-            Toast.fire({
-              icon: "success",
-              title: "Categoria creada con éxito", //`${t("toastCreateSuccess")}`
+            .then(() => {
+                Toast.fire({
+                    icon: "success",
+                    title: "Categoria creada con éxito", //`${t("toastCreateSuccess")}`
+                });
+            })
+            .catch((err) => {
+                console.error(err);
+                Toast.fire({
+                    icon: "error",
+                    title: `${t("toastCreateFail")}`,
+                });
             });
-          })
-          .catch((err) => {
-            console.error(err);
-            Toast.fire({
-              icon: "error",
-              title: `${t("toastCreateFail")}`,
-            });
-          });
-      };
+    };
 
-      const updateCategory = () => {
+    const updateCategory = () => {
         let categoryToEdit = doc(
-          database,
-          `mossy/data/eventAccess`,
-          id
+            database,
+            `mossy/data/eventAccess`,
+            id
         );
         updateDoc(categoryToEdit, {
             name: categoryName,
             description: categoryDescription,
         })
-          .then(() => {
-            Toast.fire({
-              icon: "success",
-              title: `Categoria actualizada`,
+            .then(() => {
+                Toast.fire({
+                    icon: "success",
+                    title: `Categoria actualizada`,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                Toast.fire({
+                    icon: "success",
+                    title: err,
+                });
             });
-          })
-          .catch((err) => {
-            console.log(err);
-            Toast.fire({
-              icon: "success",
-              title: err,
-            });
-          });
-      };
+    };
 
-      const deleteCategory = (id) => {
+    const deleteCategory = (id) => {
         let categoryToDelete = doc(database, `mossy/data/category`, id);
         deleteDoc(categoryToDelete)
-          .then(() => {
-            Toast.fire({
-              icon: "success",
-              title: `Categoria removida con éxito`,
+            .then(() => {
+                Toast.fire({
+                    icon: "success",
+                    title: `Categoria removida con éxito`,
+                });
+            })
+            .catch((err) => {
+                //alert("Esta campaña no se puede eliminar");
+                Toast.fire({
+                    icon: "error",
+                    title: "No se puede eliminar", //`${t("toastDeleteFail")}`
+                });
             });
-          })
-          .catch((err) => {
-            //alert("Esta campaña no se puede eliminar");
-            Toast.fire({
-              icon: "error",
-              title: "No se puede eliminar", //`${t("toastDeleteFail")}`
-            });
-          });
-      };
+    };
 
-      const [categoryData, setCategoryData] = useState([]);
-      const getCategoryData = async () => {
+    const getCategoryData = async () => {
         const categoryRef = collection(database, `mossy/data/category`);
         await getDocs(categoryRef).then((response) => {
             setCategoryData(
-            response.docs.map((data) => {
-              return { ...data.data(), id: data.id };
-            })
-          );
+                response.docs.map((data) => {
+                    return { ...data.data(), id: data.id };
+                })
+            );
         });
-      };
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         return () => {
             getCategoryData()
         }
-      }, [])
-      
-      const Toast = Swal.mixin({
+    }, [])
+
+    const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
         },
-      });
+    });
 
     return (
-        <div className="relative  overflow-hidden">
+        <div className="relative h-screen overflow-hidden">
             <NavBar />
 
             <div className={`cardsContainer w-full ${showNewCatModal ? 'h-screen' : 'h-full'} py-20 bgMain`}>
                 <div className="text-right w-11/12 mr-auto">
-                    <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10 mr-2" onClick={() => { setShowNewCatModal(true) }}>Crear nueva categoría</button>
-                    <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10">Mantenimiento</button>
+                    {showMaintenance ? <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10 mr-2" onClick={() => { setShowNewCatModal(true) }}>Crear nueva categoría</button> : null}
+                    <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10" onClick={() => { setShowMaintence(true) }}>Mantenimiento</button>
                 </div>
                 <div className="w-11/12 h-11/12 top-40 inset-x-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto justify-items-center gap-y-24">
-                    {categoryData.map((data)=>{
-                        return(<CategoryCard data={data}/>);
+                    {categoryData.map((data) => {
+                        return (<CategoryCard data={data}/>);
                     })}
                 </div>
                 <Footer />
