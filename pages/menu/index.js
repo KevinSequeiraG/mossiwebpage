@@ -3,13 +3,125 @@ import { NavBar } from "../../components/navbar";
 import 'material-icons/iconfont/material-icons.css';
 import CategoryCard from "../../components/categoryCard";
 import NewCategoryModal from "../../components/newCategoryModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { database } from "../../lib/firebaseConfig";
+import {
+    collection,
+    addDoc,
+    query,
+    where,
+    getDocs,
+    doc,
+    deleteDoc,
+    updateDoc,
+    orderBy,
+  } from "firebase/firestore";
 
 const Menu = () => {
     const [showNewCatModal, setShowNewCatModal] = useState(false)
     const closeModal = () => {
         setShowNewCatModal(false)
     }
+
+    const [categoryId, setCategoryId] = useState("");
+    const [categoryName, setCategoryName] = useState("");
+    const [categoryDescription, setCategoryDescription] = useState("");
+
+    const createCategory = () => {
+        const categoryRef = collection(database, `mossy/data/category`);
+        addDoc(categoryRef, {
+            categoryId:categoryId, 
+            name: categoryName,
+            description: categoryDescription,
+        })
+          .then(() => {
+            Toast.fire({
+              icon: "success",
+              title: "Categoria creada con éxito", //`${t("toastCreateSuccess")}`
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            Toast.fire({
+              icon: "error",
+              title: `${t("toastCreateFail")}`,
+            });
+          });
+      };
+
+      const updateCategory = () => {
+        let categoryToEdit = doc(
+          database,
+          `mossy/data/eventAccess`,
+          id
+        );
+        updateDoc(categoryToEdit, {
+            name: categoryName,
+            description: categoryDescription,
+        })
+          .then(() => {
+            Toast.fire({
+              icon: "success",
+              title: `Categoria actualizada`,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            Toast.fire({
+              icon: "success",
+              title: err,
+            });
+          });
+      };
+
+      const deleteCategory = (id) => {
+        let categoryToDelete = doc(database, `mossy/data/category`, id);
+        deleteDoc(categoryToDelete)
+          .then(() => {
+            Toast.fire({
+              icon: "success",
+              title: `Categoria removida con éxito`,
+            });
+          })
+          .catch((err) => {
+            //alert("Esta campaña no se puede eliminar");
+            Toast.fire({
+              icon: "error",
+              title: "No se puede eliminar", //`${t("toastDeleteFail")}`
+            });
+          });
+      };
+
+      const [categoryData, setCategoryData] = useState([]);
+      const getCategoryData = async () => {
+        const categoryRef = collection(database, `mossy/data/category`);
+        await getDocs(categoryRef).then((response) => {
+            setCategoryData(
+            response.docs.map((data) => {
+              return { ...data.data(), id: data.id };
+            })
+          );
+        });
+      };
+
+      useEffect(() => {
+        return () => {
+            getCategoryData()
+        }
+      }, [])
+      
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
 
     return (
         <div className="relative  overflow-hidden">
@@ -21,13 +133,9 @@ const Menu = () => {
                     <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10">Mantenimiento</button>
                 </div>
                 <div className="w-11/12 h-11/12 top-40 inset-x-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto justify-items-center gap-y-24">
-                    <CategoryCard />
-                    <CategoryCard />
-                    <CategoryCard />
-                    <CategoryCard />
-                    <CategoryCard />
-                    <CategoryCard />
-                    <CategoryCard />
+                {categoryData.map((data)=>{
+                    return(<CategoryCard data={data}/>);
+                })}
                 </div>
                 <Footer />
             </div>
