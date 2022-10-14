@@ -142,6 +142,7 @@
 .MainFooter {
   position: absolute;
   width: 100%;
+  bottom: 9rem;
 }
 
 .MainFooter div {
