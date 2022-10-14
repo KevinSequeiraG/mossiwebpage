@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import 'material-icons/iconfont/material-icons.css';
+@import "material-icons/iconfont/material-icons.css";
 
 /* backgroundColor */
 .bgMain {
@@ -30,7 +30,6 @@
 }
 
 .social-icon a {
-
   background: rgba(217, 217, 217, 0.1);
   display: inline-flex;
   border-radius: 50%;
@@ -55,13 +54,13 @@
 }
 
 .social-icon a img {
-
   z-index: 1;
   transition: 0.3s ease-in-out;
 }
 
 .social-icon a:hover img {
-  filter: brightness(0) saturate(100%) invert(0%) sepia(7%) saturate(98%) hue-rotate(346deg) brightness(95%) contrast(86%);
+  filter: brightness(0) saturate(100%) invert(0%) sepia(7%) saturate(98%)
+    hue-rotate(346deg) brightness(95%) contrast(86%);
 }
 
 /* Product Cards */
@@ -102,7 +101,12 @@
   width: 104%;
   height: 102%;
   border-radius: 8px;
-  background-image: linear-gradient(var(--rotate), #ffff94, #efb810 43%, #664300);
+  background-image: linear-gradient(
+    var(--rotate),
+    #ffff94,
+    #efb810 43%,
+    #664300
+  );
   position: absolute;
   z-index: 0;
   top: -1%;
@@ -122,9 +126,14 @@
   margin: 0 auto;
   transform: scale(0.8);
   filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(var(--rotate), #ffff94, #efb810 43%, #664300);
+  background-image: linear-gradient(
+    var(--rotate),
+    #ffff94,
+    #efb810 43%,
+    #664300
+  );
   opacity: 1;
-  transition: opacity .5s;
+  transition: opacity 0.5s;
   animation: spin 2.5s linear infinite;
 }
 
@@ -182,4 +191,8 @@
 .scrollbar::-webkit-scrollbar-thumb {
   background: #e9e9eb !important;
   border-radius: 50px !important;
+}
+
+.detailsButtonBG {
+background-image: linear-gradient(to right, #f9d423 0%, #ff4e50 100%);
 }
