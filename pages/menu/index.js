@@ -20,6 +20,9 @@ import {
 
 const Menu = () => {
     const [showNewCatModal, setShowNewCatModal] = useState(false)
+    const closeModal = () => {
+        setShowNewCatModal(false)
+    }
 
     const [categoryId, setCategoryId] = useState("");
     const [categoryName, setCategoryName] = useState("");
@@ -137,13 +140,13 @@ const Menu = () => {
                 <Footer />
             </div>
 
-            {showNewCatModal ? <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">           
-                <button className="absolute right-[30rem] top-[10rem] bg-red-500 text-white rounded-[50%] border border-white w-[4rem] z-[9999] h-[4rem] mx-2 hover:bg-red-800">
-                        <span className="material-icons !text-[50px]">
-                            close
-                        </span>
-                    </button>
-                <NewCategoryModal />
+            {showNewCatModal ? <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">
+                {/* <button className="absolute right-[30rem] top-[10rem] bg-red-500 text-white rounded-[50%] border border-white w-[4rem] z-[9999] h-[4rem] mx-2 hover:bg-red-800">
+                    <span className="material-icons !text-[50px]">
+                        close
+                    </span>
+                </button> */}
+                <NewCategoryModal closeModal={closeModal} />
             </div> : null}
         </div>
     )
