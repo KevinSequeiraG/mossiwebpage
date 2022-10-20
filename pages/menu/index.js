@@ -56,24 +56,6 @@ const Menu = () => {
             });
     };
 
-    const deleteCategory = (id) => {
-        let categoryToDelete = doc(database, `mossy/data/category`, id);
-        deleteDoc(categoryToDelete)
-            .then(() => {
-                Toast.fire({
-                    icon: "success",
-                    title: `Categoria removida con éxito`,
-                });
-            })
-            .catch((err) => {
-                //alert("Esta campaña no se puede eliminar");
-                Toast.fire({
-                    icon: "error",
-                    title: "No se puede eliminar", //`${t("toastDeleteFail")}`
-                });
-            });
-    };
-
     const getCategoryData = async () => {
         const categoryRef = collection(database, `mossy/data/category`);
         await getDocs(categoryRef).then((response) => {
@@ -109,23 +91,18 @@ const Menu = () => {
             <div className={`cardsContainer w-full  pt-20 pb-[10rem] bgMain`}>
                 <div className="text-right w-11/12 mr-auto">
                     {showMaintenance ? <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10 mr-2" onClick={() => { setShowNewCatModal(true) }}>Crear nueva categoría</button> : null}
-                    <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10" onClick={() => { setShowMaintence(!showMaintenance) }}>{showMaintenance?'Finalizar':'Mantenimiento'}</button>
+                    <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10" onClick={() => { setShowMaintence(!showMaintenance) }}>{showMaintenance ? 'Finalizar' : 'Mantenimiento'}</button>
                 </div>
                 <div className="w-11/12 h-11/12 top-40 inset-x-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto justify-items-center gap-y-24">
                     {categoryData.map((data) => {
                         // eslint-disable-next-line react/jsx-key
-                        return (<CategoryCard data={data} showMaintenance={showMaintenance}/>);
+                        return (<CategoryCard getCategoryData={getCategoryData} data={data} showMaintenance={showMaintenance} />);
                     })}
                 </div>
                 <Footer />
             </div>
             {showNewCatModal ? <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">
-                {/* <button className="absolute right-[30rem] top-[10rem] bg-red-500 text-white rounded-[50%] border border-white w-[4rem] z-[9999] h-[4rem] mx-2 hover:bg-red-800">
-                    <span className="material-icons !text-[50px]">
-                        close
-                    </span>
-                </button> */}
-                <NewCategoryModal closeModal={closeModal} getCategoryData={getCategoryData}/>
+                <NewCategoryModal closeModal={closeModal} getCategoryData={getCategoryData} />
             </div> : null}
         </div>
     )

@@ -30,9 +30,9 @@ const NewCategoryModal = (props) => {
     const createCategory = (data) => {
         const categoryRef = collection(database, `mossy/data/category`);
         addDoc(categoryRef, {
-            name: data.categoryName,
-            description: data.categoryDescription,
-            image: `${data.categoryImage != undefined ? data.categoryImage : ''}`
+            categoryName: data.categoryName,
+            categoryDescription: data.categoryDescription,
+            categoryImage: `${data.categoryImage != undefined ? data.categoryImage : ''}`
         })
             .then(() => {
                 Toast.fire({
