@@ -9,7 +9,7 @@ export default function ProductList() {
     <>
       <NavBar />
 
-      <div className={`cardsContainer w-full h-full py-20 bgMain`}>
+      <div className={`cardsContainer w-full h-full pt-20 pb-36 relative bgMain`}>
         <div className="text-left w-10/12 mx-auto mt-8 lg:mt-16">
           <h1 className="text-[22px] lg:text-[30px] font-bold text-white text-center">
             NOMBRE DE LA CATEGORÍA
@@ -34,8 +34,9 @@ export default function ProductList() {
           <ProductCard />
           <ProductCard />
         </div>
-
-        <Footer />
+        <div className="absolute w-full bottom-[75px]">
+          <Footer />
+        </div>
       </div>
     </>
   );
