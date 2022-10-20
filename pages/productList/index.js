@@ -1,10 +1,31 @@
-import React from "react";
+import { database } from "../../lib/firebaseConfig";
+import React, { useEffect, useState } from "react";
 import CategoryCard from "../../components/categoryCard";
 import Footer from "../../components/footer";
 import { NavBar } from "../../components/navbar";
 import ProductCard from "../../components/productCard";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function ProductList() {
+  const [productData, setProductData] = useState([]);
+
+  const getProductData = async () => {
+    const productRef = collection(database, `mossy/data/product`);
+    await getDocs(productRef).then((response) => {
+      setProductData(
+        response.docs.map((data) => {
+          return { ...data.data(), id: data.id };
+        })
+      );
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      getProductData();
+    };
+  }, []);
+  
   return (
     <>
       <NavBar />
@@ -25,14 +46,9 @@ export default function ProductList() {
           </p>
         </div>
         <div className="w-10/12 h-11/12 top-40 inset-x-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mx-auto justify-items-center gap-y-12">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {productData.map((data) => {
+            return <ProductCard data={data} />;
+          })}
         </div>
 
         <Footer />
