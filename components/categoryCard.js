@@ -12,6 +12,7 @@ import {
     orderBy,
 } from "firebase/firestore";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 const CategoryCard = (props) => {
     
@@ -53,7 +54,7 @@ const CategoryCard = (props) => {
                 <img src={props.data.categoryImage != "" ? props.data.categoryImage : "./Images/Panaderia.png"} className="rounded-lg"></img>
                 <h1 className="text-gray-200 mt-2 px-4">{props.data.categoryName}</h1>
                 <p className="text-gray-200 text-[1rem] mt-4 px-4">{props.data.categoryDescription}</p>
-                <button className="text-[.7rem] lg:text-[1rem] mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700">Ver productos</button>
+                <Link href={'/productList/[index]'} as={`productList/${props.data.categoryName}`}><button className="text-[.7rem] lg:text-[1rem] mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700">Ver productos</button></Link>
                 <div className="mt-6" >
                     {props.showMaintenance ? <button onClick={()=>{deleteCategory(props.data.id)}} className="bg-red-500 text-white rounded-[50%] border border-white w-[2rem] h-[2rem] mx-2 hover:bg-red-800">
                         <span className="material-icons">
