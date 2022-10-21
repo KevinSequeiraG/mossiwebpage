@@ -6,6 +6,7 @@ import { NavBar } from "../../components/navbar";
 import ProductCard from "../../components/productCard";
 import { collection, getDocs, query, where, getDoc} from "firebase/firestore";
 import { useRouter } from "next/router";
+import 'material-icons/iconfont/material-icons.css';
 
 export default function ProductList() {
   const [productData, setProductData] = useState([]);
@@ -56,7 +57,7 @@ export default function ProductList() {
         </div>
         <div className="w-10/12 h-11/12 top-40 inset-x-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mx-auto justify-items-center gap-y-12">
           {productData.map((data, i) => {
-              return <div key={i}><ProductCard data={data}/></div>;
+              return <ProductCard data={data}/>;
           })}
         </div>
         <div className="absolute w-full bottom-[75px]">
