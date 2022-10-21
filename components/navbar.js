@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import SocialMedia from './SocialMedia'
+import Logo from "../public/Images/LogoTemp.png"
 
 export const NavBar = () => {
     const openMenu = () => {
@@ -21,7 +22,7 @@ export const NavBar = () => {
             <nav id='navegator' className="bg-white lg:bg-transparent bg-opacity-50 border-gray-200 px-2 sm:px-4 py-2.5 rounded z-50 fixed w-full">
                 <div className="container flex flex-wrap justify-between items-center mx-auto">
                     <a href="https://flowbite.com/" className="flex items-center">
-                        <img src="./Images/LogoTemp.png" className='w-[3rem] h-[3rem] lg:w-[5rem] lg:h-[5rem]' />
+                        <img src='./Images/LogoTemp.png' className='w-[3rem] h-[3rem] lg:w-[5rem] lg:h-[5rem]' />
                         {/* <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Mossi Food Service</span> */}
                     </a>
                     <button onClick={() => { openMenu(); }} data-collapse-toggle="navbar-default" type="button" className="mr-6 inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden focus:outline-none" aria-controls="navbar-default" aria-expanded="false">

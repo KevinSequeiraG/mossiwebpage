@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProductDetailModal from "./productDetailModal";
 
-const ProductCard = () => {
+const ProductCard = (props) => {
   const [closeModal, setCloseModal] = useState(false);
   return (
     <>
@@ -16,15 +16,15 @@ const ProductCard = () => {
 
         <div className="px-5 pb-5">
           <h5 className="text-[16px] lg:text-[18px] font-semibold tracking-tight text-gray-900 dark:text-white">
-            NOMBRE DEL PRODUCTO
+            {props.data.name}
           </h5>
           <h5 className="text-[12px] lg:[14px] font-semibold tracking-tight text-gray-900 dark:text-white my-1">
-            DESCRIPCION DEL PRODUCTO
+          {props.data.description}
           </h5>
 
           <div className="flex justify-between items-center">
             <span className="text-[14px] lg:text-[15px] font-bold text-gray-900 dark:text-white">
-              ₡599
+            ₡ {props.data.price}
             </span>
             <div
               onClick={() => {
@@ -39,7 +39,7 @@ const ProductCard = () => {
       </div>
       {closeModal ? (
         <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">
-          <ProductDetailModal closeModal={() => setCloseModal()} />
+          <ProductDetailModal data={props.data} closeModal={() => setCloseModal()} />
         </div>
       ) : null}
     </>

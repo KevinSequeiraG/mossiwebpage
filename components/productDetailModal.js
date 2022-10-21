@@ -18,11 +18,10 @@ const ProductDetailModal = (props) => {
       />
       <div className="p-5">
         <h1 className="text-[16px] lg:text-[20px] font-semibold tracking-tight text-gray-900 dark:text-white text-center border-b w-min truncate mx-auto mb-5 mt-20">
-          NOMBRE DEL PRODUCTO
+          {props.data.name}
         </h1>
         <h2 className="text-[14px] lg:[16px] font-semibold tracking-tight text-gray-900 dark:text-white my-1 text-justify mb-5">
-          DESCRIPCION DEL PRODUCTO DESCRIPCION DEL PRODUCTO DESCRIPCION DEL
-          PRODUCTO DESCRIPCION DEL PRODUCTO DESCRIPCION DEL PRODUCTO
+          {props.data.description}
         </h2>
         <h2 className="text-[14px] lg:text-[16px] font-semibold tracking-tight text-gray-900 dark:text-white my-2">
           Lista de ingredientes principales:
