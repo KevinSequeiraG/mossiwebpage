@@ -25,8 +25,8 @@ export default function Ingredients() {
           <div class="flex justify-center min-h-screen min-w-full">
             <div class="w-full">
               <div class="overflow-auto">
-                <div class="flex lg:justify-between border-b-2 border-fuchsia-900 pb-1">
-                  <h2 class="text-2xl text-gray-500 font-bold">
+                <div class="flex lg:justify-between border-b-2 border-blue-900 pb-1">
+                  <h2 class="text-2xl text-white font-bold">
                     Mis ingredientes
                   </h2>
                   <div class="text-center flex-auto">
@@ -66,106 +66,21 @@ export default function Ingredients() {
                 <table class="table text-gray-400 border-separate space-y-6 text-sm w-full">
                   <thead class="bg-blue-500 text-white">
                     <tr>
-                      <th class="p-3">Nombre del ingrediente</th>
-                      <th class="p-3 text-left">Tipo medida</th>
-                      <th class="p-3 text-left">Proveedor</th>
-                      <th class="p-3 text-left">Precio unitario</th>
-                      <th class="p-3 text-left">Acciones</th>
+                      <th class="p-3 text-center">Nombre del ingrediente</th>
+                      <th class="p-3 text-center">Tipo medida</th>
+                      <th class="p-3 text-center">Proveedor</th>
+                      <th class="p-3 text-center">Precio unitario</th>
+                      <th class="p-3 text-center">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr class="bg-blue-200 lg:text-black">
-                      <td class="p-3 font-medium capitalize">Queso</td>
-                      <td class="p-3">Kilo</td>
-                      <td class="p-3">Pulpería</td>
-                      <td class="p-3">admin</td>
+                      <td class="p-3 text-center font-medium capitalize">Quesoooooooo</td>
+                      <td class="p-3 text-center">Kilo</td>
+                      <td class="p-3 text-center">Pulpería super super super</td>
+                      <td class="p-3 text-center">₡ 1500</td>
 
-                      <td class="p-3">
-                        <span class="bg-green-400 text-gray-50 rounded-md px-2">
-                          ACTIVE
-                        </span>
-                      </td>
-                      <td class="p-3">
-                        <a
-                          href="#"
-                          class="text-gray-500 hover:text-gray-100 mr-2"
-                        >
-                          <i class="material-icons-outlined text-base">
-                            visibility
-                          </i>
-                        </a>
-                        <a
-                          href="#"
-                          class="text-yellow-400 hover:text-gray-100 mx-2"
-                        >
-                          <i class="material-icons-outlined text-base">edit</i>
-                        </a>
-                        <a
-                          href="#"
-                          class="text-red-400 hover:text-gray-100 ml-2"
-                        >
-                          <i class="material-icons-round text-base">
-                            delete_outline
-                          </i>
-                        </a>
-                      </td>
-                    </tr>
-                    <tr class="bg-blue-200 lg:text-black">
-                      <td class="p-3 font-medium capitalize">Arif Uddin</td>
-                      <td class="p-3">gazi.rahad871@gmail.com</td>
-                      <td class="p-3">01648349009</td>
-                      <td class="p-3 uppercase">user</td>
-
-                      <td class="p-3">
-                        <span class="bg-green-400 text-gray-50 rounded-md px-2">
-                          ACTIVE
-                        </span>
-                      </td>
-                      <td class="p-3">
-                        <a
-                          href="#"
-                          class="text-gray-500 hover:text-gray-100 mr-2"
-                        >
-                          <i class="material-icons-outlined text-base">
-                            visibility
-                          </i>
-                        </a>
-                        <a
-                          href="#"
-                          class="text-yellow-400 hover:text-gray-100 mx-2"
-                        >
-                          <i class="material-icons-outlined text-base">edit</i>
-                        </a>
-                        <a
-                          href="#"
-                          class="text-red-400 hover:text-gray-100 ml-2"
-                        >
-                          <i class="material-icons-round text-base">
-                            delete_outline
-                          </i>
-                        </a>
-                      </td>
-                    </tr>
-                    <tr class="bg-blue-200 lg:text-black">
-                      <td class="p-3 font-medium capitalize">Rubel Amin</td>
-                      <td class="p-3">gazi.rahad871@gmail.com</td>
-                      <td class="p-3">01648349010</td>
-                      <td class="p-3 uppercase">admin</td>
-
-                      <td class="p-3">
-                        <span class="bg-green-400 text-gray-50 rounded-md px-2">
-                          ACTIVE
-                        </span>
-                      </td>
-                      <td class="p-3">
-                        <a
-                          href="#"
-                          class="text-gray-500 hover:text-gray-100 mr-2"
-                        >
-                          <i class="material-icons-outlined text-base">
-                            visibility
-                          </i>
-                        </a>
+                      <td class="p-3 text-center">
                         <a
                           href="#"
                           class="text-yellow-400 hover:text-gray-100 mx-2"
