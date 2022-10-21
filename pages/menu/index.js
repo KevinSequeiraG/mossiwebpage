@@ -18,6 +18,7 @@ import {
     orderBy,
 } from "firebase/firestore";
 import Swal from "sweetalert2";
+import UpdateCategoryModal from "../../components/updateCategoryModal";
 
 const Menu = () => {
     const [showNewCatModal, setShowNewCatModal] = useState(false);
@@ -26,35 +27,11 @@ const Menu = () => {
     const [categoryName, setCategoryName] = useState("");
     const [categoryDescription, setCategoryDescription] = useState("");
     const [categoryData, setCategoryData] = useState([]);
+    const [showUpdateModal, setShowUpdateModal] = useState(false)
 
-    const closeModal = () => {
+    const closeNewCatModal = () => {
         setShowNewCatModal(false);
     }
-
-    const updateCategory = () => {
-        let categoryToEdit = doc(
-            database,
-            `mossy/data/eventAccess`,
-            id
-        );
-        updateDoc(categoryToEdit, {
-            name: categoryName,
-            description: categoryDescription,
-        })
-            .then(() => {
-                Toast.fire({
-                    icon: "success",
-                    title: `Categoria actualizada`,
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-                Toast.fire({
-                    icon: "success",
-                    title: err,
-                });
-            });
-    };
 
     const getCategoryData = async () => {
         const categoryRef = collection(database, `mossy/data/category`);
@@ -86,7 +63,7 @@ const Menu = () => {
     });
 
     return (
-        <div className={`relative ${showNewCatModal ? 'h-screen' : 'h-full'}`}>
+        <div className={`relative ${showNewCatModal || showUpdateModal? 'h-screen overflow-hidden' : 'h-full'}`}>
             <NavBar />
             <div className={`cardsContainer w-full h-full pt-20 pb-[10rem] bgMain`}>
                 <div className="text-right w-11/12 mr-auto">
@@ -96,14 +73,14 @@ const Menu = () => {
                 <div className="w-11/12 h-11/12 top-40 inset-x-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto justify-items-center gap-y-24">
                     {categoryData.map((data) => {
                         // eslint-disable-next-line react/jsx-key
-                        return (<CategoryCard getCategoryData={getCategoryData} data={data} showMaintenance={showMaintenance} />);
+                        return (<CategoryCard getCategoryData={getCategoryData} data={data} showMaintenance={showMaintenance}/>);
                     })}
                 </div>
                 <Footer />
             </div>
             {showNewCatModal ? <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">
-                <NewCategoryModal closeModal={closeModal} getCategoryData={getCategoryData} />
-            </div> : null}
+                <NewCategoryModal closeModal={closeNewCatModal} getCategoryData={getCategoryData} />
+            </div> : null}            
         </div>
     )
 }
