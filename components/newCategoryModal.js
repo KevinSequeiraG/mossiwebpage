@@ -73,15 +73,15 @@ const NewCategoryModal = (props) => {
           Acá agregas una nueva categoría
         </p>
         <div className="w-3/6 mx-auto h-96">
-            <ImageUplaod
-              containerClassName={
-                "flex justify-center items-center w-full h-96 bg-[#F3F4F5] rounded-[10px] dark:hover:bg-bray-800 hover:bg-gray-200 "
-              }
-              setImageValue={setEventImage}
-              setImageUrl={setEventImageUrl}
-              imageUrl={eventImageUrl}
-            />
-          </div>
+          <ImageUplaod
+            containerClassName={
+              "flex justify-center items-center w-full h-96 bg-[#F3F4F5] rounded-[10px] dark:hover:bg-bray-800 hover:bg-gray-200 "
+            }
+            setImageValue={setEventImage}
+            setImageUrl={setEventImageUrl}
+            imageUrl={eventImageUrl}
+          />
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col w-4/5 mx-auto mt-8"
