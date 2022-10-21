@@ -78,7 +78,7 @@ const CategoryCard = (props) => {
 
             </div>
             {showUpdateModal ? <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999999] fixed" >
-                <UpdateCategoryModal closeModal={closeUpdateCatModal} categoryName={props.data.categoryName} categoryDescription={props.data.categoryDescription} categoryId={props.data.id}/>
+                <UpdateCategoryModal getCategoryData={props.getCategoryData()} closeModal={closeUpdateCatModal} categoryName={props.data.categoryName} categoryDescription={props.data.categoryDescription} categoryId={props.data.id}/>
             </div> : null}
         </>
     )

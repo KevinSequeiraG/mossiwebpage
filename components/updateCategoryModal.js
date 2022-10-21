@@ -38,6 +38,7 @@ const UpdateCategoryModal = (props) => {
             categoryDescription: data.categoryDescription,
         })
             .then(() => {
+                props.closeModal()
                 Toast.fire({
                     icon: "success",
                     title: `Categoria actualizada`,
@@ -64,7 +65,7 @@ const UpdateCategoryModal = (props) => {
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-4/5 mx-auto mt-8">
                     <div className='flex justify-between my-2'>
                         <label className='text-white'>Nombre de categoría</label>
-                        <input value={categoryName} className='rounded' type="text" placeholder="Nombre" {...register("categoryName", { required: true, maxLength: 80 })} />
+                        <input defaultValue={categoryName} className='rounded' type="text" placeholder="Nombre" {...register("categoryName", { required: true, maxLength: 80 })} />
                     </div>
                     <div className='flex justify-between my-2'>
                         <label className='text-white'>Descripción de categoría</label>
