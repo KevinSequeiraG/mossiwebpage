@@ -56,7 +56,7 @@ export default function ProductList() {
         </div>
         <div className="w-10/12 h-11/12 top-40 inset-x-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mx-auto justify-items-center gap-y-12">
           {productData.map((data, i) => {
-              return <ProductCard data={data}/>;
+              return <div key={i}><ProductCard data={data}/></div>;
           })}
         </div>
         <div className="absolute w-full bottom-[75px]">
