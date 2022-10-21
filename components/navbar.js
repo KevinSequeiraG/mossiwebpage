@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import SocialMedia from './SocialMedia'
 import Logo from "../public/Images/LogoTemp.png"
+import { useUserAuth } from '../lib/userAuthContext';
 
 export const NavBar = () => {
+    const { loggedUser, logOut } = useUserAuth()
     const openMenu = () => {
         const menuContainer = document.getElementById('navbar-default');
         const navContainer = document.getElementById('navegator');
@@ -14,7 +16,6 @@ export const NavBar = () => {
             menuContainer.classList.add("hidden")
             navContainer.classList.add('bg-opacity-50')
         }
-
     }
 
     return (
@@ -31,11 +32,14 @@ export const NavBar = () => {
                     </button>
                     <div className="hidden w-full md:block md:w-auto relative" id="navbar-default">
                         <ul className="flex flex-col items-center px-4 pb-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 text-right">
-                            <Link href={'/login'}>
-                                <li className='w-full lg:w-auto py-2 pr-4 pl-3'>
-                                    <a href="#" className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white" aria-current="page">Ingresar</a>
-                                </li>
-                            </Link>
+                            {loggedUser.name ?
+                                <Link href={'/login'}>
+                                    <button className='block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white' onClick={() => { logOut() }}>Cerrar sesión</button>
+                                </Link> : <Link href={'/login'}>
+                                    <li className='w-full lg:w-auto py-2 pr-4 pl-3'>
+                                        <a href="#" className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white" aria-current="page">Ingresar</a>
+                                    </li>
+                                </Link>}
                             <Link href={'/'}>
                                 <li className='w-full lg:w-auto py-2 pr-4 pl-3'>
                                     <a href="#" className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white" aria-current="page">Home</a>
