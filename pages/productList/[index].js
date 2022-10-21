@@ -44,7 +44,7 @@ export default function ProductList() {
     <>
       <NavBar />
 
-      <div className={`cardsContainer w-full h-full py-20 bgMain`}>
+      <div className={`cardsContainer w-full h-full pt-20 pb-36 relative bgMain min-h-screen`}>
         <div className="text-left w-10/12 mx-auto mt-8 lg:mt-16">
           <h1 className="text-[22px] lg:text-[30px] font-bold text-white text-center">
             {/*{categoryData.categoryName}*/}
@@ -55,12 +55,13 @@ export default function ProductList() {
           </p>
         </div>
         <div className="w-10/12 h-11/12 top-40 inset-x-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mx-auto justify-items-center gap-y-12">
-          {productData.map((data) => {
-              return <ProductCard data={data} />;
+          {productData.map((data, i) => {
+              return <ProductCard data={data}/>;
           })}
         </div>
-
-        <Footer />
+        <div className="absolute w-full bottom-[75px]">
+          <Footer />
+        </div>
       </div>
     </>
   );
