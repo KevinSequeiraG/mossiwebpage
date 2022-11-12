@@ -40,6 +40,11 @@ export const NavBar = () => {
                                         <a href="#" className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white" aria-current="page">Ingresar</a>
                                     </li>
                                 </Link>}
+                            {loggedUser.name ? <Link href={'/ingredients'}>
+                                <li className='w-full lg:w-auto py-2 pr-4 pl-3'>
+                                    <a href="#" className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white" aria-current="page">Ingredientes</a>
+                                </li>
+                            </Link> : null}
                             <Link href={'/'}>
                                 <li className='w-full lg:w-auto py-2 pr-4 pl-3'>
                                     <a href="#" className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white" aria-current="page">Home</a>
