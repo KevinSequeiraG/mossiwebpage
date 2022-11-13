@@ -49,7 +49,7 @@ const ProductCard = (props) => {
         <div className="p-5">
           <img
             className="rounded-[10px] object-cover"
-            src="https://content-cocina.lecturas.com/medio/2022/07/26/mejores-panes-del-mundo_a91edf92_1200x630.jpg"
+            src={props.data.productImgUrl?props.data.productImgUrl:"https://cdn.shopify.com/s/files/1/0229/0839/files/Untitled_design__1.png?2393&format=jpg&quality=90"}
             alt="product image"
           />
         </div>
