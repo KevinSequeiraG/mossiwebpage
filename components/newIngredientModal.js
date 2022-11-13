@@ -1,26 +1,15 @@
-import React, { useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { collection, addDoc } from "firebase/firestore";
-import { database } from "../lib/firebaseConfig";
 import Swal from "sweetalert2";
-import ImageUplaod from "./imageUpload";
+import { database } from "../lib/firebaseConfig";
 
-const NewCategoryModal = (props) => {
+export default function NewIngredientModal(props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [categoryName, setCategoryName] = useState("");
-  const [categoryDescription, setCategoryDescription] = useState("");
-  const [categoryImage, setCategoryImage] = useState();
-  const [eventImage, setEventImage] = useState(null);
-  const [eventImageUrl, setEventImageUrl] = useState("");
-
-  const onSubmit = (data) => {
-    createCategory(data);
-  };
-
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -32,30 +21,34 @@ const NewCategoryModal = (props) => {
       toast.addEventListener("mouseleave", Swal.resumeTimer);
     },
   });
-
-  const createCategory = (data) => {
-    const categoryRef = collection(database, `mossy/data/category`);
-    addDoc(categoryRef, {
-      categoryName: data.categoryName,
-      categoryDescription: data.categoryDescription,
-      categoryImage: `${eventImageUrl != undefined ? eventImageUrl : ""}`,
+  const createIngredient = (data) => {
+    const ingredientRef = collection(database, `mossy/data/ingredient`);
+    addDoc(ingredientRef, {
+      ingredientName: data.ingredientName,
+      ingredientMeasure: data.ingredientMeasure,
+      ingredientSupplier: data.ingredientSupplier,
+      ingredientPrice: data.ingredientPrice,
     })
       .then(() => {
+        props.closeModal();
+        props.getIngredientData();
         Toast.fire({
           icon: "success",
-          title: "Categoria creada con éxito", //`${t("toastCreateSuccess")}`
+          title: "Ingrediente añadido con éxito", //`${t("toastCreateSuccess")}`
         });
       })
-      .then(props.closeModal(), props.getCategoryData())
+      .then(() => {})
       .catch((err) => {
         console.error(err);
         Toast.fire({
           icon: "error",
-          title: `${t("toastCreateFail")}`,
+          title: `Error al crear el ingrediente, consulta a soporte.`,
         });
       });
   };
-
+  const onSubmit = (data) => {
+    createIngredient(data);
+  };
   return (
     <div className="w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
       <button
@@ -68,38 +61,52 @@ const NewCategoryModal = (props) => {
       </button>
       <div>
         <p className="text-center text-[1.5rem] text-white">
-          Acá agregas una nueva categoría
+          Acá agregas un nuevo ingrediente
         </p>
-        <div className="w-3/6 mx-auto h-96">
-          <ImageUplaod
-            containerClassName={
-              "flex justify-center items-center w-full h-96 bg-[#F3F4F5] rounded-[10px] dark:hover:bg-bray-800 hover:bg-gray-200 "
-            }
-            setImageValue={setEventImage}
-            setImageUrl={setEventImageUrl}
-            imageUrl={eventImageUrl}
-          />
-        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col w-4/5 mx-auto mt-8"
         >
           <div className="flex justify-between my-2">
-            <label className="text-white">Nombre de categoría</label>
+            <label className="text-white">Nombre</label>
             <input
               className="rounded"
               type="text"
               placeholder="Nombre"
-              {...register("categoryName", { required: true, maxLength: 80 })}
+              {...register("ingredientName", { required: true, maxLength: 80 })}
             />
           </div>
           <div className="flex justify-between my-2">
-            <label className="text-white">Descripción de categoría</label>
+            <label className="text-white">Tipo de medida</label>
             <input
               className="rounded"
-              type="textarea"
-              placeholder="Descripción"
-              {...register("categoryDescription", {
+              type="text"
+              placeholder="Medida"
+              {...register("ingredientMeasure", {
+                required: true,
+                maxLength: 80,
+              })}
+            />
+          </div>
+          <div className="flex justify-between my-2">
+            <label className="text-white">Proveedor</label>
+            <input
+              className="rounded"
+              type="text"
+              placeholder="Proveedor"
+              {...register("ingredientSupplier", {
+                required: true,
+                maxLength: 80,
+              })}
+            />
+          </div>
+          <div className="flex justify-between my-2">
+            <label className="text-white">Precio</label>
+            <input
+              className="rounded"
+              type="number"
+              placeholder="Precio"
+              {...register("ingredientPrice", {
                 required: true,
                 maxLength: 100,
               })}
@@ -108,12 +115,10 @@ const NewCategoryModal = (props) => {
           <input
             className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mr-2"
             type="submit"
-            value={"Guardar categoría"}
+            value={"Guardar ingrediente"}
           />
         </form>
       </div>
     </div>
   );
-};
-
-export default NewCategoryModal;
+}
