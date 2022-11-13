@@ -1,8 +1,48 @@
 import { useState } from "react";
 import ProductDetailModal from "./productDetailModal";
+import { database } from "../lib/firebaseConfig";
+import {
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import Swal from "sweetalert2";
+import UpdateProductModal from "./updateProductModal";
 
 const ProductCard = (props) => {
   const [closeModal, setCloseModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false)
+
+  const deleteCategory = (id) => {
+    let categoryToDelete = doc(database, `mossy/data/product`, id);
+
+    deleteDoc(categoryToDelete)
+      .then(() => {
+        props.getProductData()
+        Toast.fire({
+          icon: "success",
+          title: `producto eliminado con éxito`,
+        })
+      })
+      .catch((err) => {
+        Toast.fire({
+          icon: "error",
+          title: "No se puede eliminar",
+        });
+      });
+  };
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
+
   return (
     <>
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
@@ -19,12 +59,12 @@ const ProductCard = (props) => {
             {props.data.name}
           </h5>
           <h5 className="text-[12px] lg:[14px] font-semibold tracking-tight text-gray-900 dark:text-white my-1">
-          {props.data.description}
+            {props.data.description}
           </h5>
 
           <div className="flex justify-between items-center">
             <span className="text-[14px] lg:text-[15px] font-bold text-gray-900 dark:text-white">
-            ₡ {props.data.price}
+              ₡ {props.data.price}
             </span>
             <div
               onClick={() => {
@@ -35,13 +75,28 @@ const ProductCard = (props) => {
               Detalles
             </div>
           </div>
+          <div className="mx-auto w-min flex mt-2">
+            {props.showMaintenance ? <button onClick={() => { deleteCategory(props.data.id) }} className="bg-red-500 text-white rounded-[50%] border border-white w-[2rem] h-[2rem] mx-2 hover:bg-red-800">
+              <span className="material-icons">
+                close
+              </span>
+            </button> : null}
+            {props.showMaintenance ? <button className="bg-yellow-500 text-white rounded-[50%] border border-white w-[2rem] h-[2rem] mx-2 hover:bg-yellow-600" onClick={() => setShowUpdateModal(true)}>
+              <span className="material-icons">
+                edit
+              </span>
+            </button> : null}
+          </div>
         </div>
       </div>
       {closeModal ? (
         <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">
-          <ProductDetailModal data={props.data} closeModal={() => setCloseModal()} />
+          <ProductDetailModal data={props.data} closeModal={() => setCloseModal(false)} />
         </div>
       ) : null}
+      {showUpdateModal ? <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999999] fixed" >
+        <UpdateProductModal getProductData={()=>props.getProductData()} closeModal={() => {setShowUpdateModal(false);}} productId={props.data.id} data={props.data}/>
+      </div> : null}
     </>
   );
 };

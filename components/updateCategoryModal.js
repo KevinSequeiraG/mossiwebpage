@@ -6,12 +6,16 @@ import {
 } from "firebase/firestore";
 import { database } from "../lib/firebaseConfig";
 import Swal from "sweetalert2";
+import ImageUplaod from './imageUpload';
 
 const UpdateCategoryModal = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [categoryName, setCategoryName] = useState(props.categoryName);
     const [categoryDescription, setCategoryDescription] = useState(props.categoryDescription);
+
     const [categoryImage, setCategoryImage] = useState();
+    const [eventImage, setEventImage] = useState(null);
+    const [eventImageUrl, setEventImageUrl] = useState("");
 
     const onSubmit = data => { updateCategory(data) }
 
@@ -63,15 +67,15 @@ const UpdateCategoryModal = (props) => {
             <div>
                 <p className="text-center text-[1.5rem] text-white">Acá actualizas la categoría</p>
                 <div className="w-3/6 mx-auto h-96">
-          <ImageUplaod
-            containerClassName={
-              "flex justify-center items-center w-full h-96 bg-[#F3F4F5] rounded-[10px] dark:hover:bg-bray-800 hover:bg-gray-200 "
-            }
-            setImageValue={setEventImage}
-            setImageUrl={setEventImageUrl}
-            imageUrl={eventImageUrl}
-          />
-        </div>
+                    <ImageUplaod
+                        containerClassName={
+                            "flex justify-center items-center w-full h-96 bg-[#F3F4F5] rounded-[10px] dark:hover:bg-bray-800 hover:bg-gray-200 "
+                        }
+                        setImageValue={setEventImage}
+                        setImageUrl={setEventImageUrl}
+                        imageUrl={eventImageUrl}
+                    />
+                </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-4/5 mx-auto mt-8">
                     <div className='flex justify-between my-2'>
                         <label className='text-white'>Nombre de categoría</label>
