@@ -1,10 +1,15 @@
-import { addDoc, collection } from "firebase/firestore";
-import React from "react";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import React, { useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { database } from "../lib/firebaseConfig";
 
 export default function NewIngredientModal(props) {
+  const [ingredientName, setIngredientName] = useState();
+  const [ingredientMeasure, setIngredientMeasure] = useState();
+  const [ingredientSupplier, setIngredientSupplier] = useState();
+  const [ingredientPrice, setIngredientPrice] = useState();
+
   const {
     register,
     handleSubmit,
@@ -46,9 +51,51 @@ export default function NewIngredientModal(props) {
         });
       });
   };
-  const onSubmit = (data) => {
-    createIngredient(data);
+  const updateIngredient = (data) => {
+    let ingredientToEdit = doc(
+      database,
+      `mossy/data/ingredient`,
+      props.data.id
+    );
+    updateDoc(ingredientToEdit, {
+      ingredientName: data.ingredientName,
+      ingredientMeasure: data.ingredientMeasure,
+      ingredientSupplier: data.ingredientSupplier,
+      ingredientPrice: data.ingredientPrice,
+    })
+      .then(() => {
+        props.closeModal();
+        props.getIngredientData();
+        Toast.fire({
+          icon: "success",
+          title: "Ingrediente actualizado con éxito", //`${t("toastCreateSuccess")}`
+        });
+      })
+      .then(() => {})
+      .catch((err) => {
+        console.error(err);
+        Toast.fire({
+          icon: "error",
+          title: `Error al actualizar el ingrediente, consulta a soporte.`,
+        });
+      });
   };
+  const onSubmit = (data) => {
+    if (props.isEdit) {
+      updateIngredient(data);
+    } else {
+      createIngredient(data);
+    }
+  };
+  useLayoutEffect(() => {
+    if (props.isEdit) {
+      console.log(props.data);
+      setIngredientName(props.data.ingredientName);
+      setIngredientMeasure(props.data.ingredientMeasure);
+      setIngredientSupplier(props.data.ingredientSupplier);
+      setIngredientPrice(props.data.ingredientPrice);
+    }
+  }, []);
   return (
     <div className="w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
       <button
@@ -61,7 +108,7 @@ export default function NewIngredientModal(props) {
       </button>
       <div>
         <p className="text-center text-[1.5rem] text-white">
-          Acá agregas un nuevo ingrediente
+          Acá {props.isEdit ? "actualizas" : "creas"} un ingrediente
         </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -70,6 +117,7 @@ export default function NewIngredientModal(props) {
           <div className="flex justify-between my-2">
             <label className="text-white">Nombre</label>
             <input
+              value={ingredientName}
               className="rounded"
               type="text"
               placeholder="Nombre"
@@ -79,6 +127,7 @@ export default function NewIngredientModal(props) {
           <div className="flex justify-between my-2">
             <label className="text-white">Tipo de medida</label>
             <input
+              value={ingredientMeasure}
               className="rounded"
               type="text"
               placeholder="Medida"
@@ -91,6 +140,7 @@ export default function NewIngredientModal(props) {
           <div className="flex justify-between my-2">
             <label className="text-white">Proveedor</label>
             <input
+              value={ingredientSupplier}
               className="rounded"
               type="text"
               placeholder="Proveedor"
@@ -103,6 +153,7 @@ export default function NewIngredientModal(props) {
           <div className="flex justify-between my-2">
             <label className="text-white">Precio</label>
             <input
+              value={ingredientPrice}
               className="rounded"
               type="number"
               placeholder="Precio"
@@ -115,7 +166,9 @@ export default function NewIngredientModal(props) {
           <input
             className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mr-2"
             type="submit"
-            value={"Guardar ingrediente"}
+            value={
+              props.isEdit ? "Actualizar ingrediente" : "Guardar ingrediente"
+            }
           />
         </form>
       </div>
