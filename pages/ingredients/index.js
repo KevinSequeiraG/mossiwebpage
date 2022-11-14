@@ -92,7 +92,12 @@ export default function Ingredients() {
                   <tbody>
                     {ingredientData.map((data) => {
                       // eslint-disable-next-line react/jsx-key
-                      return <IngredientRow data={data} />;
+                      return (
+                        <IngredientRow
+                          data={data}
+                          getIngredientData={getIngredientData}
+                        />
+                      );
                     })}
                   </tbody>
                 </table>
