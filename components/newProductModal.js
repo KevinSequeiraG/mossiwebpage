@@ -4,6 +4,7 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import { database } from "../lib/firebaseConfig";
 import Swal from "sweetalert2";
 import ImageUplaod from "./imageUpload";
+import SelectIngredientsModal from "./selectIngredients";
 
 
 const NewProductModal = (props) => {
@@ -20,6 +21,8 @@ const NewProductModal = (props) => {
   const [productImageUrl, setProductImageUrl] = useState();
   const [categories, setCategories] = useState()
 
+  const [showSelectIngredientsModal, setShowSelectIngredientsModal] =
+    useState(false);
   const onSubmit = (data) => {
     createCategory(data);
   };
@@ -78,6 +81,7 @@ const NewProductModal = (props) => {
   
 
   return (
+    <>
     <div className="w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
       <button
         onClick={() => {
@@ -151,6 +155,17 @@ const NewProductModal = (props) => {
               })}
             />
           </div>
+          <div className="flex justify-between my-2">
+            <label className="text-white">Asociar ingredientes</label>
+            <input
+              onClick={() => {
+                setShowSelectIngredientsModal(true);
+              }}
+              className="text-[1rem] px-2 py-1 bg-green-500 text-white rounded-xl hover:bg-green-700 "
+              type="button"
+              value={"+ Añadir ingredientes"}
+            />
+          </div>
           <input
             className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mr-2"
             type="submit"
@@ -159,6 +174,8 @@ const NewProductModal = (props) => {
         </form>
       </div>
     </div>
+    {showSelectIngredientsModal?<SelectIngredientsModal closeModal={setShowSelectIngredientsModal}/>:null}
+    </>
   );
 };
 

@@ -8,6 +8,7 @@ import { database } from "../../lib/firebaseConfig";
 
 export default function Ingredients() {
   const [ingredientData, setIngredientData] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
   const [openNewIngredientModal, setOpenNewIngredientModal] = useState(false);
   const getIngredientData = async () => {
     const ingredientRef = collection(database, `mossy/data/ingredient`);
@@ -48,6 +49,9 @@ export default function Ingredients() {
                   <div class="text-center flex-auto flex justify-center items-center text-white space-x-3">
                     <p>Busca un ingrediente:</p>
                     <input
+                      onChange={(e) => {
+                        setSearchInput(e.target.value);
+                      }}
                       type="text"
                       name="name"
                       class="
@@ -91,13 +95,23 @@ export default function Ingredients() {
                   </thead>
                   <tbody>
                     {ingredientData.map((data) => {
-                      // eslint-disable-next-line react/jsx-key
-                      return (
-                        <IngredientRow
-                          data={data}
-                          getIngredientData={getIngredientData}
-                        />
-                      );
+                      if (
+                        data.ingredientName
+                          .toString()
+                          .toLowerCase()
+                          .includes(searchInput.toString().toLowerCase()) ||
+                        data.ingredientSupplier
+                          .toString()
+                          .toLowerCase()
+                          .includes(searchInput.toString().toLowerCase())
+                      ) {
+                        return (
+                          <IngredientRow
+                            data={data}
+                            getIngredientData={getIngredientData}
+                          />
+                        );
+                      }
                     })}
                   </tbody>
                 </table>

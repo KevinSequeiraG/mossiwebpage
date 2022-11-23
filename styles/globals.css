@@ -220,3 +220,28 @@ tr td:nth-child(1),
 tr th:nth-child(1) {
   border-radius: 0.625rem 0 0 0.625rem;
 }
+
+.tableSelectIngredient{
+  width: 100% !important;
+  max-height: 15rem !important;
+}
+
+.scrollbarUsers {
+  scrollbar-width: 8px !important;
+  scrollbar-color: #e9e9eb !important;
+}
+
+/* For Chrome, EDGE, Opera, Others */
+.scrollbarUsers::-webkit-scrollbar {
+  width: 8px !important;
+  height: 10px !important;
+}
+
+.scrollbarUsers::-webkit-scrollbar-track {
+  background: none !important;
+}
+
+.scrollbarUsers::-webkit-scrollbar-thumb {
+  background: #e9e9eb !important;
+  border-radius: 50px !important;
+}
