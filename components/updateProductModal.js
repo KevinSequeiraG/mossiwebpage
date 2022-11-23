@@ -77,7 +77,7 @@ const UpdateProductModal = (props) => {
       </button>
       <div>
         <p className="text-center text-[1.5rem] text-white">
-          Acá actualizas la categoría
+          Acá actualizas el producto
         </p>
         <div className="w-3/6 mx-auto h-96">
           <ImageUplaod
@@ -118,8 +118,10 @@ const UpdateProductModal = (props) => {
             <input
               defaultValue={price}
               className="rounded"
-              type="text"
+              type="number"
               placeholder="Precio"
+              min="1" 
+              step="any"
               {...register("price", { required: true, maxLength: 80 })}
             />
           </div>

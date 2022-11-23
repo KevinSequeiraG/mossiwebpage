@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { database } from "../lib/firebaseConfig";
 import Swal from "sweetalert2";
 import ImageUplaod from "./imageUpload";
+
 
 const NewProductModal = (props) => {
   const {
@@ -17,9 +18,21 @@ const NewProductModal = (props) => {
   const [price, setPrice] = useState();
   const [productImage, setProductImage] = useState(null);
   const [productImageUrl, setProductImageUrl] = useState();
+  const [categories, setCategories] = useState()
 
   const onSubmit = (data) => {
     createCategory(data);
+  };
+
+  const getCategoriesData = async () => {
+    const categoriesRef = collection(database, `mossy/data/category`);
+    await getDocs(categoriesRef).then((response) => {
+      setCategories(
+        response.docs.map((data) => {
+          return { ...data.data(), id: data.id };          
+        })
+      );
+    });
   };
 
   const Toast = Swal.mixin({
@@ -59,6 +72,11 @@ const NewProductModal = (props) => {
       });
   };
 
+  useEffect(() => {
+    getCategoriesData()
+  }, [])
+  
+
   return (
     <div className="w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
       <button
@@ -88,13 +106,18 @@ const NewProductModal = (props) => {
           className="flex flex-col w-4/5 mx-auto mt-8"
         >
           <div className="flex justify-between my-2">
-            <label className="text-white">Categoría del producto</label>
-            <input
-              className="rounded"
-              type="text"
-              placeholder="Nombre"
-              {...register("categoryName", { required: true, maxLength: 80 })}
-            />
+            <label className="text-white" for="categories">Categoría del producto</label>
+
+            <select name="categories" id="categories" className="rounded w-[181px]">
+              {categories?.map(categorie => {
+                return(
+                <option 
+                {...register("categoryName", { required: true, maxLength: 80 })} 
+                key={categorie.id} 
+                value={categorie.categoryName}>
+                  {categorie.categoryName}</option>)
+              }) }
+            </select>
           </div>
           <div className="flex justify-between my-2">
             <label className="text-white">Nombre del producto</label>
@@ -110,7 +133,9 @@ const NewProductModal = (props) => {
             <input
               className="rounded"
               type="number"
-              placeholder="Nombre"
+              placeholder="Precio"
+              min="1" 
+              step="any"
               {...register("price", { required: true, maxLength: 80 })}
             />
           </div>
