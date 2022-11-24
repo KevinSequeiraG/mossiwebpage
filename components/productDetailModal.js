@@ -17,7 +17,7 @@ const ProductDetailModal = (props) => {
 
   useEffect(() => {
     console.log(props.data.ingredientsForProduct);
-    props.data.ingredientsForProduct.map(ingredientUid => {
+    props.data.ingredientsForProduct?.map(ingredientUid => {
       getIngredients(ingredientUid)
     })
 
