@@ -70,7 +70,7 @@ const Menu = () => {
     });
 
     return (
-        <div className={`relative ${showNewCatModal || showUpdateModal? 'h-screen overflow-hidden' : 'h-full'}`}>
+        <div className={`relative ${showNewCatModal || showUpdateModal? 'min-h-screen overflow-hidden' : 'h-full'}`}>
             <NavBar />
             <div className={`cardsContainer w-full h-full ${loggedUser.name?'pt-20':'pt-32'} pb-[10rem] bgMain`}>
                 <div className="text-right w-11/12 mr-auto">
