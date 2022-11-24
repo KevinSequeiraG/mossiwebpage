@@ -27,7 +27,7 @@ export default function Ingredients() {
   return (
     <>
       <NavBar />
-      <div className={`cardsContainer w-full h-full py-20 bgMain`}>
+      <div className={`cardsContainer w-full h-full py-20 bgMain relative`}>
         <div className="text-left w-10/12 mx-auto mt-8 lg:mt-16">
           <h1 className="text-[22px] lg:text-[30px] font-bold text-white text-center">
             Ingredientes
@@ -106,10 +106,11 @@ export default function Ingredients() {
                           .includes(searchInput.toString().toLowerCase())
                       ) {
                         return (
+                          <div key={data.id}>
                           <IngredientRow
                             data={data}
                             getIngredientData={getIngredientData}
-                          />
+                          /></div>
                         );
                       }
                     })}
