@@ -29,7 +29,7 @@ const Menu = () => {
     const [categoryDescription, setCategoryDescription] = useState("");
     const [categoryData, setCategoryData] = useState([]);
     const [showUpdateModal, setShowUpdateModal] = useState(false)
-    const {loggedUser} = useUserAuth()
+    const { loggedUser } = useUserAuth()
 
     const closeNewCatModal = () => {
         setShowNewCatModal(false);
@@ -47,15 +47,13 @@ const Menu = () => {
     };
 
     useEffect(() => {
-        return () => {
-            getCategoryData()
-        }
+        getCategoryData()
     }, [])
     useEffect(() => {
         console.log("length", categoryData.length);
-      console.log("categorias: ",categoryData);
+        console.log("categorias: ", categoryData);
     }, [categoryData])
-    
+
 
     const Toast = Swal.mixin({
         toast: true,
@@ -70,24 +68,24 @@ const Menu = () => {
     });
 
     return (
-        <div className={`relative ${showNewCatModal || showUpdateModal? 'min-h-screen overflow-hidden' : 'h-full min-h-screen'}`}>
+        <div className={`relative ${showNewCatModal || showUpdateModal ? 'min-h-screen overflow-hidden' : 'h-full min-h-screen'}`}>
             <NavBar />
-            <div className={`cardsContainer w-full h-full ${loggedUser.name?'pt-20':'pt-32'} pb-[10rem] bgMain min-h-screen`}>
+            <div className={`cardsContainer w-full h-full ${loggedUser.name ? 'pt-20' : 'pt-32'} pb-[10rem] bgMain min-h-screen`}>
                 <div className="text-right w-11/12 mr-auto">
                     {showMaintenance ? <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10 mr-2" onClick={() => { setShowNewCatModal(true) }}>Crear nueva categoría</button> : null}
-                    {loggedUser.name?<button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10" onClick={() => { setShowMaintence(!showMaintenance) }}>{showMaintenance ? 'Finalizar' : 'Mantenimiento'}</button>:null}
+                    {loggedUser.name ? <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10" onClick={() => { setShowMaintence(!showMaintenance) }}>{showMaintenance ? 'Finalizar' : 'Mantenimiento'}</button> : null}
                 </div>
                 <div className="w-11/12 h-11/12 top-40 inset-x-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto justify-items-center gap-y-24">
                     {categoryData.map((data) => {
                         // eslint-disable-next-line react/jsx-key
-                        return (<CategoryCard getCategoryData={getCategoryData} data={data} showMaintenance={showMaintenance}/>);
+                        return (<CategoryCard getCategoryData={getCategoryData} data={data} showMaintenance={showMaintenance} />);
                     })}
                 </div>
                 <Footer />
             </div>
             {showNewCatModal ? <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">
                 <NewCategoryModal closeModal={closeNewCatModal} getCategoryData={getCategoryData} />
-            </div> : null}            
+            </div> : null}
         </div>
     )
 }
