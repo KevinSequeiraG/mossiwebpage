@@ -1,6 +1,30 @@
-import { useState } from "react";
+import { database } from "../lib/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 const ProductDetailModal = (props) => {
+  const [ingredientsForProduct, setIngredientsForProduct] = useState([])
+
+  const getIngredients = async (uid) => {
+    console.log(uid);
+    let ingredientsRef = doc(database, `mossy/data/ingredient`, uid);
+    await getDoc(ingredientsRef).then(async (ingredient) => {
+      var ingredient = {...ingredient.data(), id: ingredient.id};
+      console.log(ingredient);
+      setIngredientsForProduct([...ingredientsForProduct, ingredient]);
+    });
+  }
+
+  useEffect(() => {
+    console.log(props.data.ingredientsForProduct);
+    props.data.ingredientsForProduct.map(ingredientUid => {
+      getIngredients(ingredientUid)
+    })
+
+    console.log(ingredientsForProduct);
+  }, [])
+
+
   return (
     <div className="w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
       <button
@@ -28,12 +52,9 @@ const ProductDetailModal = (props) => {
         </h2>
         <ul class="list-disc ml-10 text-[14px] lg:text-[16px] font-semibold tracking-tight text-gray-900 dark:text-white space-y-2">
           {/* meter el <li></li> en .map*/}
-          <li>Ingrediente 1</li>
-          <li>Ingrediente 2</li>
-          <li>Ingrediente 3</li>
-          <li>Ingrediente 4</li>
-          <li>Ingrediente 5</li>
-          <li>Ingrediente 6</li>
+          {ingredientsForProduct?.map(ingredient => {
+            return (<li key={ingredient.id}>{ingredient.ingredientName}</li>)
+          })}
         </ul>
       </div>
     </div>

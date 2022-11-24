@@ -106,10 +106,11 @@ export default function Ingredients() {
                           .includes(searchInput.toString().toLowerCase())
                       ) {
                         return (
+                          <div key={data.id}>
                           <IngredientRow
                             data={data}
                             getIngredientData={getIngredientData}
-                          />
+                          /></div>
                         );
                       }
                     })}
