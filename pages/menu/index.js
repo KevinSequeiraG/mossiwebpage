@@ -51,6 +51,11 @@ const Menu = () => {
             getCategoryData()
         }
     }, [])
+    useEffect(() => {
+        console.log("length", categoryData.length);
+      console.log("categorias: ",categoryData);
+    }, [categoryData])
+    
 
     const Toast = Swal.mixin({
         toast: true,
