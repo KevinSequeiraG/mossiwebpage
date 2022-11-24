@@ -70,9 +70,9 @@ const Menu = () => {
     });
 
     return (
-        <div className={`relative ${showNewCatModal || showUpdateModal? 'min-h-screen overflow-hidden' : 'h-full'}`}>
+        <div className={`relative ${showNewCatModal || showUpdateModal? 'min-h-screen overflow-hidden' : 'h-full min-h-screen'}`}>
             <NavBar />
-            <div className={`cardsContainer w-full h-full ${loggedUser.name?'pt-20':'pt-32'} pb-[10rem] bgMain`}>
+            <div className={`cardsContainer w-full h-full ${loggedUser.name?'pt-20':'pt-32'} pb-[10rem] bgMain min-h-screen`}>
                 <div className="text-right w-11/12 mr-auto">
                     {showMaintenance ? <button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10 mr-2" onClick={() => { setShowNewCatModal(true) }}>Crear nueva categoría</button> : null}
                     {loggedUser.name?<button className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10" onClick={() => { setShowMaintence(!showMaintenance) }}>{showMaintenance ? 'Finalizar' : 'Mantenimiento'}</button>:null}
