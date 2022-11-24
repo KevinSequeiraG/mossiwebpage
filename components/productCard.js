@@ -90,7 +90,7 @@ const ProductCard = (props) => {
         </div>
       </div>
       {closeModal ? (
-        <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">
+        <div className="w-full h-screen bg-black bg-opacity-50 absolute left-0 top-0 z-[999] fixed">
           <ProductDetailModal data={props.data} closeModal={() => setCloseModal(false)} />
         </div>
       ) : null}
