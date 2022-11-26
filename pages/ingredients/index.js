@@ -39,83 +39,82 @@ export default function Ingredients() {
           </p>
         </div>
         <div className="w-10/12 h-11/12 top-40 inset-x-0 mx-auto justify-items-center ">
-          <div class="flex justify-center min-h-screen min-w-full">
-            <div class="w-full">
-              <div class="overflow-auto">
-                <div class="flex lg:justify-between border-b-2 border-blue-900 pb-1">
-                  <h2 class="text-2xl text-white font-bold">
-                    Mis ingredientes
-                  </h2>
-                  <div class="text-center flex-auto flex justify-center items-center text-white space-x-3">
-                    <p>Busca un ingrediente:</p>
-                    <input
-                      onChange={(e) => {
-                        setSearchInput(e.target.value);
-                      }}
-                      type="text"
-                      name="name"
-                      class="
-              w-1/3
-              py-2
+          <div className="flex justify-center min-h-screen min-w-full">
+            <div className="w-full">
+              <div className="flex border-b-2 border-blue-900 pb-1 flex-wrap items-center justify-start space-y-3 space-x-0 sm:space-x-3">
+                <h2 className="text-2xl text-white font-bold">Mis ingredientes</h2>
+                <div className="text-center flex-auto flex justify-start md:justify-center items-center text-white">
+                  <p className="hidden md:inline">Busca un ingrediente:</p>
+                  <p className="inline md:hidden">Buscar:</p>
+                  <input
+                    onChange={(e) => {
+                      setSearchInput(e.target.value);
+                    }}
+                    type="text"
+                    name="name"
+                    className="
+              w-1/2 md:w-1/3
+              py-1
               border-b-2 border-blue-600
               outline-none
               focus:border-yellow-400 bg-transparent !text-white
             "
-                    />
-                  </div>
+                  />
+                </div>
 
-                  <div>
-                    <a href="#">
-                      <button
-                        onClick={() => setOpenNewIngredientModal(true)}
-                        class="
+                <div>
+                  <button
+                    onClick={() => setOpenNewIngredientModal(true)}
+                    className="
                 bg-blue-500
                 hover:bg-blue-700
                 text-white
                 py-1
-                px-3
-                sm
+                px-3        
                 rounded-full
+                mb-3
               "
-                      >
-                        + Añadir nuevo
-                      </button>
-                    </a>
-                  </div>
+                  >
+                    + Añadir nuevo
+                  </button>
                 </div>
-                <table class="table text-gray-400 border-separate space-y-6 text-sm w-full">
-                  <thead class="bg-blue-500 text-white">
-                    <tr>
-                      <th class="p-3 text-center">Nombre del ingrediente</th>
-                      <th class="p-3 text-center">Tipo de medida</th>
-                      <th class="p-3 text-center">Proveedor</th>
-                      <th class="p-3 text-center">Precio unitario</th>
-                      <th class="p-3 text-center">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {ingredientData.map((data) => {
-                      if (
-                        data.ingredientName
-                          .toString()
-                          .toLowerCase()
-                          .includes(searchInput.toString().toLowerCase()) ||
-                        data.ingredientSupplier
-                          .toString()
-                          .toLowerCase()
-                          .includes(searchInput.toString().toLowerCase())
-                      ) {
-                        return (
-                          <div key={data.id}>
-                          <IngredientRow
-                            data={data}
-                            getIngredientData={getIngredientData}
-                          /></div>
-                        );
-                      }
-                    })}
-                  </tbody>
-                </table>
+              </div>
+              <div className="overflow-auto">
+              <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
+                <thead className="bg-blue-500 text-white">
+                  <tr>
+                    <th className="p-3 text-center truncate">
+                      Nombre del ingrediente
+                    </th>
+                    <th className="p-3 text-center truncate">Tipo de medida</th>
+                    <th className="p-3 text-center truncate">Proveedor</th>
+                    <th className="p-3 text-center truncate">Precio unitario</th>
+                    <th className="p-3 text-center truncate">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ingredientData.map((data) => {
+                    if (
+                      data.ingredientName
+                        .toString()
+                        .toLowerCase()
+                        .includes(searchInput.toString().toLowerCase()) ||
+                      data.ingredientSupplier
+                        .toString()
+                        .toLowerCase()
+                        .includes(searchInput.toString().toLowerCase())
+                    ) {
+                      return (
+                        <IngredientRow
+                          key={data.id}
+                          data={data}
+                          getIngredientData={getIngredientData}
+                        />
+                      );
+                    }
+                  })}
+                </tbody>
+              </table>
               </div>
             </div>
           </div>

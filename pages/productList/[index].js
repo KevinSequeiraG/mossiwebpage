@@ -52,7 +52,7 @@ export default function ProductList() {
     <>
       <NavBar />
       <div
-        className={`cardsContainer w-full h-full pt-20 pb-36 relative bgMain min-h-screen`}
+        className={`cardsContainer w-full h-full pt-24 pb-36 relative bgMain min-h-screen`}
       >
         <div className="text-left w-10/12 mx-auto mt-8 lg:mt-16">
           <div className="relative">
@@ -61,7 +61,7 @@ export default function ProductList() {
             </h1>
             {showMaintenance ? (
               <button
-                className="text-[1rem] absolute right-28 top-0 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10 mr-2"
+                className="text-[1rem] absolute right-28 -top-10 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10 mr-2"
                 onClick={() => {
                   setShowNewProductModal(true);
                 }}
@@ -71,7 +71,7 @@ export default function ProductList() {
             ) : null}
             {loggedUser.name ? (
               <button
-                className="text-[1rem] absolute right-0 top-0 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10"
+                className="text-[1rem] absolute right-0 -top-10 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mb-10"
                 onClick={() => {
                   setShowMaintence(!showMaintenance);
                 }}

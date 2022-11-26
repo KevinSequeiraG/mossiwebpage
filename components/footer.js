@@ -47,7 +47,7 @@ const Footer = () => {
 
                 <div className='FooterInfo'>
                     <div className='footer-texts mb-4'>
-                        <small className='mr-2 text-white'>&copy; Copyright Mossi Food Service</small>
+                        <small className='mr-2 text-white truncate'>&copy; Copyright Mossi Food Service</small>
                         <SocialMedia />
                     </div>
                 </div>

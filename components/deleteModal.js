@@ -3,7 +3,7 @@ import React from "react";
 export default function DeleteModal(props) {
   return (
     <>
-      <div className="w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
+      <div className="w-4/6 md:w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
         <button
           onClick={() => {
             props.closeModal();
@@ -13,11 +13,11 @@ export default function DeleteModal(props) {
           <span className="material-icons mt-1 !text-[50px]">close</span>
         </button>
         <div>
-          <p className="text-center text-[1.5rem] text-white px-3">
+          <p className="text-center text-[18px] lg:text-[1.5rem] text-white px-2">
             Estás a punto de eliminar {props.whatToDelete}
           </p>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-4">
           <input
             className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-gray-500 text-white rounded-xl hover:bg-green-700 mr-2"
             type="button"

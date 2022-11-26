@@ -50,7 +50,7 @@ const ProductDetailModal = (props) => {
         <h2 className="text-[14px] lg:text-[16px] font-semibold tracking-tight text-gray-900 dark:text-white my-2">
           Lista de ingredientes principales:
         </h2>
-        <ul class="list-disc ml-10 text-[14px] lg:text-[16px] font-semibold tracking-tight text-gray-900 dark:text-white space-y-2">
+        <ul className="list-disc ml-10 text-[14px] lg:text-[16px] font-semibold tracking-tight text-gray-900 dark:text-white space-y-2">
           {/* meter el <li></li> en .map*/}
           {ingredientsForProduct?.map(ingredient => {
             return (<li key={ingredient.id}>{ingredient.ingredientName}</li>)
