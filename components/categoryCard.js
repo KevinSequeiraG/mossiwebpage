@@ -72,7 +72,7 @@ const CategoryCard = (props) => {
           </p>
           <Link
             href={"/productList/[index]"}
-            as={`productList/${props.data.categoryName}`}
+            as={`productList/${props.data.id}`}
           >
             <button className="text-[.7rem] lg:text-[1rem] mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700">
               Ver productos

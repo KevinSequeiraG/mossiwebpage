@@ -156,7 +156,7 @@ export default function NewIngredientModal(props) {
               value={ingredientPrice}
               className="rounded px-2"
               type="number"
-              placeholder="Precio"
+              placeholder="0"
               {...register("ingredientPrice", {
                 required: true,
                 maxLength: 100,
@@ -164,7 +164,7 @@ export default function NewIngredientModal(props) {
             />
           </div>
           <input
-            className="text-[1rem] mt-4 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mr-2"
+            className="text-[1rem] mt-4 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700"
             type="submit"
             value={
               props.isEdit ? "Actualizar ingrediente" : "Guardar ingrediente"

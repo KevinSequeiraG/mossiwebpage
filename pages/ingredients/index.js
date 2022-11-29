@@ -42,7 +42,9 @@ export default function Ingredients() {
           <div className="flex justify-center min-h-screen min-w-full">
             <div className="w-full">
               <div className="flex border-b-2 border-blue-900 pb-1 flex-wrap items-center justify-start space-y-3 space-x-0 sm:space-x-3">
-                <h2 className="text-2xl text-white font-bold">Mis ingredientes</h2>
+                <h2 className="text-2xl text-white font-bold">
+                  Mis ingredientes
+                </h2>
                 <div className="text-center flex-auto flex justify-start md:justify-center items-center text-white">
                   <p className="hidden md:inline">Busca un ingrediente:</p>
                   <p className="inline md:hidden">Buscar:</p>
@@ -80,41 +82,47 @@ export default function Ingredients() {
                 </div>
               </div>
               <div className="overflow-auto">
-              <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
-                <thead className="bg-blue-500 text-white">
-                  <tr>
-                    <th className="p-3 text-center truncate">
-                      Nombre del ingrediente
-                    </th>
-                    <th className="p-3 text-center truncate">Tipo de medida</th>
-                    <th className="p-3 text-center truncate">Proveedor</th>
-                    <th className="p-3 text-center truncate">Precio unitario</th>
-                    <th className="p-3 text-center truncate">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {ingredientData.map((data) => {
-                    if (
-                      data.ingredientName
-                        .toString()
-                        .toLowerCase()
-                        .includes(searchInput.toString().toLowerCase()) ||
-                      data.ingredientSupplier
-                        .toString()
-                        .toLowerCase()
-                        .includes(searchInput.toString().toLowerCase())
-                    ) {
-                      return (
-                        <IngredientRow
-                          key={data.id}
-                          data={data}
-                          getIngredientData={getIngredientData}
-                        />
-                      );
-                    }
-                  })}
-                </tbody>
-              </table>
+                <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
+                  <thead className="bg-blue-500 text-white">
+                    <tr>
+                      <th className="p-3 text-center truncate">
+                        Nombre del ingrediente
+                      </th>
+                      <th className="p-3 text-center truncate">
+                        Tipo de medida
+                      </th>
+                      <th className="p-3 text-center truncate">Proveedor</th>
+                      <th className="p-3 text-center truncate">
+                        Precio unitario
+                      </th>
+                      <th className="p-3 text-center truncate">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ingredientData.map((data) => {
+                      if (
+                        data.ingredientName
+                          .toString()
+                          .toLowerCase()
+                          .includes(searchInput.toString().toLowerCase()) ||
+                        data.ingredientSupplier
+                          .toString()
+                          .toLowerCase()
+                          .includes(searchInput.toString().toLowerCase())
+                      ) {
+                        return (
+                          <>
+                            <IngredientRow
+                              key={data.id}
+                              data={data}
+                              getIngredientData={getIngredientData}
+                            />
+                          </>
+                        );
+                      }
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

@@ -64,7 +64,7 @@ export default function ImageUplaod({
                 src={`${imageUrl}`}
               ></img>
 
-              <div className="absolute flex justify-center items-center  left-0 h-20 w-full rounded-[10px] opacity-0 hover:opacity-100 !bg-[#707070] !bg-opacity-60 transition delay-75 duration-300">
+              <div className="absolute flex justify-center items-center  left-0 h-20 lg:h-96 w-full rounded-[10px] opacity-0 hover:opacity-100 !bg-[#707070] !bg-opacity-60 transition delay-75 duration-300">
                 <div className="flex flex-col items-center justify-center ">
                   <svg
                     className="w-[21px] h-[19px] md:w-[20px] md:h-[20px] mb-1"

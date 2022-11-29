@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import ImageUplaod from "./imageUpload";
 import SelectIngredientsModal from "./selectIngredients";
 
-
 const NewProductModal = (props) => {
   const {
     register,
@@ -19,8 +18,8 @@ const NewProductModal = (props) => {
   const [price, setPrice] = useState();
   const [productImage, setProductImage] = useState(null);
   const [productImageUrl, setProductImageUrl] = useState();
-  const [categories, setCategories] = useState()
-  const [ingredientsToProduct, setIngredientsToProduct] = useState([])
+  const [categories, setCategories] = useState();
+  const [ingredientsToProduct, setIngredientsToProduct] = useState([]);
 
   const [showSelectIngredientsModal, setShowSelectIngredientsModal] =
     useState(false);
@@ -54,12 +53,12 @@ const NewProductModal = (props) => {
   const createProduct = (data) => {
     const productRef = collection(database, `mossy/data/product`);
     addDoc(productRef, {
-      categoryName: data.categoryName,
+      categoryId: data.categoryName,
       description: data.description,
       name: data.name,
       price: data.price,
       productImgUrl: `${productImageUrl != undefined ? productImageUrl : ""}`,
-      ingredientsForProduct: ingredientsToProduct
+      ingredientsForProduct: ingredientsToProduct,
     })
       .then(() => {
         Toast.fire({
@@ -78,29 +77,30 @@ const NewProductModal = (props) => {
   };
 
   useEffect(() => {
-    getCategoriesData()
-  }, [])
-
+    getCategoriesData();
+  }, []);
 
   return (
     <>
-      <div className="w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
+      <div className="w-5/6 md:w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
         <button
           onClick={() => {
             props.closeModal();
           }}
-          className="absolute -right-10 -top-10 bg-red-500 text-white rounded-[50%] border border-white w-[4rem] z-[9999] h-[4rem] mx-2 hover:bg-red-800"
+          className="absolute -right-6 lg:-right-10 -top-6 lg:-top-10 bg-red-500 text-white rounded-[50%] border border-white w-[3rem] lg:w-[4rem] z-[9999] h-[3rem] lg:h-[4rem] mx-2 hover:bg-red-800"
         >
-          <span className="material-icons mt-1 !text-[50px]">close</span>
+          <span className="material-icons mt-1 !text-[30px] lg:!text-[50px]">
+            close
+          </span>
         </button>
         <div>
-          <p className="text-center text-[1.5rem] text-white">
+          <p className="text-center text-[18px] lg:text-[1.5rem] text-white">
             Acá agregas un nuevo producto
           </p>
-          <div className="w-3/6 mx-auto h-96">
+          <div className="w-5/6 lg:w-3/6 mx-auto h-20 lg:h-96">
             <ImageUplaod
               containerClassName={
-                "flex justify-center items-center w-full h-96 bg-[#F3F4F5] rounded-[10px] dark:hover:bg-bray-800 hover:bg-gray-200 "
+                "flex justify-center items-center w-full h-20 lg:h-96 bg-[#F3F4F5] rounded-[10px] dark:hover:bg-bray-800 hover:bg-gray-200 "
               }
               setImageValue={setProductImage}
               setImageUrl={setProductImageUrl}
@@ -111,45 +111,54 @@ const NewProductModal = (props) => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col w-4/5 mx-auto mt-8"
           >
-            <div className="flex justify-between my-2">
-              <label className="text-white" for="categories">Categoría del producto</label>
+            <div className="flex flex-col lg:flex-row justify-between my-2">
+              <label className="text-white" htmlFor="categories">
+                Categoría del producto
+              </label>
 
-              <select name="categories" id="categories" className="rounded w-[181px]" {...register("categoryName", { required: true, maxLength: 80 })}>
-                {categories?.map(categorie => {
+              <select
+                name="categories"
+                id="categories"
+                className="rounded w-full lg:w-[196px] px-2"
+                {...register("categoryName", { required: true, maxLength: 80 })}
+              >
+                {categories?.map((categorie) => {
                   return (
                     <option
-                      onClick={() => setCategoryName(categorie.categoryName)}
-                      
+                      onClick={() => setCategoryName(categorie.id)}
                       key={categorie.id}
-                      value={categorie.categoryName}>
-                      {categorie.categoryName}</option>)
+                      value={categorie.id}
+                    >
+                      {categorie.categoryName}
+                    </option>
+                  );
                 })}
               </select>
             </div>
-            <div className="flex justify-between my-2">
+            <div className="flex flex-col lg:flex-row justify-between my-2">
               <label className="text-white">Nombre del producto</label>
               <input
-                className="rounded"
+                className="rounded px-2"
                 type="text"
                 placeholder="Nombre"
                 {...register("name", { required: true, maxLength: 80 })}
               />
             </div>
-            <div className="flex justify-between my-2">
+            <div className="flex flex-col lg:flex-row justify-between my-2">
               <label className="text-white">Precio del producto</label>
               <input
-                className="rounded"
+                className="rounded px-2"
                 type="number"
-                placeholder="Precio"
+                placeholder="0"
                 min="1"
                 step="any"
                 {...register("price", { required: true, maxLength: 80 })}
               />
             </div>
-            <div className="flex justify-between my-2">
+            <div className="flex flex-col lg:flex-row justify-between my-2">
               <label className="text-white">Descripción del producto</label>
               <input
-                className="rounded"
+                className="rounded px-2"
                 type="textarea"
                 placeholder="Descripción"
                 {...register("description", {
@@ -158,26 +167,31 @@ const NewProductModal = (props) => {
                 })}
               />
             </div>
-            <div className="flex justify-between my-2">
+            <div className="flex flex-col lg:flex-row justify-between my-2">
               <label className="text-white">Asociar ingredientes</label>
               <input
                 onClick={() => {
                   setShowSelectIngredientsModal(true);
                 }}
-                className="text-[1rem] px-2 py-1 bg-green-500 text-white rounded-xl hover:bg-green-700 "
+                className="text-[1rem] px-2 py-1 bg-blue-600 text-white rounded-xl hover:bg-green-700 "
                 type="button"
                 value={"+ Añadir ingredientes"}
               />
             </div>
             <input
-              className="text-[1rem] mt-2 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700 mr-2"
+              className="text-[1rem] mt-8 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700"
               type="submit"
               value={"Guardar producto"}
             />
           </form>
         </div>
       </div>
-      {showSelectIngredientsModal ? <SelectIngredientsModal closeModal={setShowSelectIngredientsModal} setIngredientsToProduct={setIngredientsToProduct} /> : null}
+      {showSelectIngredientsModal ? (
+        <SelectIngredientsModal
+          closeModal={setShowSelectIngredientsModal}
+          setIngredientsToProduct={setIngredientsToProduct}
+        />
+      ) : null}
     </>
   );
 };
