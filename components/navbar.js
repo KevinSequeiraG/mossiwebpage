@@ -120,14 +120,17 @@ export const NavBar = () => {
                   </a>
                 </li>
               </Link>
-              <li className="w-full lg:w-auto py-2 pr-4 pl-3">
-                <a
-                  href="#"
-                  className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white"
-                >
-                  Nosotros
-                </a>
-              </li>
+              <Link href={"/nosotros"}>
+                <li className="w-full lg:w-auto py-2 pr-4 pl-3">
+                  <a
+                    href="#"
+                    className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white"
+                  >
+                    Nosotros
+                  </a>
+                </li>
+              </Link>
+              <Link href={"/contactanos"}>
               <li className="w-full lg:w-auto py-2 pr-4 pl-3">
                 <a
                   href="#"
@@ -136,6 +139,7 @@ export const NavBar = () => {
                   Contactanos
                 </a>
               </li>
+              </Link>
               <li className="w-full lg:w-auto py-2 pr-4 pl-3">
                 <SocialMedia />
               </li>

@@ -8,6 +8,8 @@ export default function SelectIngredientsModal(props) {
   const [ingredientData, setIngredientData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [ingredientsToProduct, setIngredientsToProduct] = useState([]);
+  const [listToShow, setListToShow] = useState([])
+
   const getIngredientData = async () => {
     const ingredientRef = collection(database, `mossy/data/ingredient`);
     await getDocs(ingredientRef).then((response) => {
@@ -19,20 +21,104 @@ export default function SelectIngredientsModal(props) {
     });
   };
 
+  const addToShowList = (producto) => {
+    var newArrayForIngredients = listToShow
+    var productPosition = 0;
+    var productExists = false;
+    listToShow.map((product, i) => {
+      if (product.id == producto.id) {
+        productExists = true
+        productPosition = i
+      }
+    })
+
+    if (productExists) {
+      newArrayForIngredients[productPosition] = { product: producto, quantity: (listToShow[productPosition].quantity + 1) }
+      setListToShow(newArrayForIngredients)
+    } else {
+      setListToShow([...listToShow, { product: producto, quantity: 1 }]);
+    }
+    console.log(listToShow);
+  }
+
   const addIngredient = (id) => {
-    console.log(id);
-    setIngredientsToProduct([...ingredientsToProduct, id]);
+    var newArrayForIngredients = ingredientsToProduct
+    var productPosition = 0;
+    var productExists = false;
+    ingredientsToProduct.map((product, i) => {
+      if (product.id == id) {
+        productExists = true
+        productPosition = i
+      }
+    })
+
+    if (productExists) {
+      newArrayForIngredients[productPosition] = { id: id, quantity: (ingredientsToProduct[productPosition].quantity + 1) }
+      setIngredientsToProduct(newArrayForIngredients)
+    } else {
+      setIngredientsToProduct([...ingredientsToProduct, { id: id, quantity: 1 }]);
+    }
+
+    console.log(ingredientsToProduct);
   };
+
+  const removeToShowList = (producto) => {
+    var newArrayForIngredients = listToShow
+    var productPosition = 0;
+    var productExists = false;
+    listToShow.map((product, i) => {
+      if (product.id == producto.id) {
+        productExists = true
+        productPosition = i
+      }
+    })
+
+    if (productExists) {
+      if (listToShow.length>0) {
+        if (listToShow[productPosition].quantity == 1) {
+          var x =newArrayForIngredients.splice(productPosition, 1);
+          console.log("aplice",x);
+          console.log("array",newArrayForIngredients);
+          setListToShow(newArrayForIngredients)
+        }else{
+          newArrayForIngredients[productPosition] = { product: producto, quantity: (newArrayForIngredients[productPosition].quantity - 1) }
+          setListToShow(newArrayForIngredients)
+        }   
+      }
+         
+    } else {
+      setListToShow([...listToShow, { product: producto, quantity: 1 }]);
+    }
+    console.log(listToShow);
+  }
 
   const removeIngredient = (id) => {
     let ingredientsArray = [];
-    ingredientsToProduct?.map((ingredient) => {
-      if (ingredient == id) {
-      } else {
-        ingredientsArray.push(id);
+
+    var newArrayForIngredients = ingredientsToProduct
+    var productPosition = 0;
+    var productExists = false;
+
+    ingredientsToProduct.map((product, i) => {
+      if (product.id == id) {
+        productExists = true
+        productPosition = i
       }
-    });
-    setIngredientsToProduct(ingredientsArray);
+    })
+
+    if (productExists) {
+      if (ingredientsToProduct[productPosition].quantity == 1) {
+        var x =newArrayForIngredients.splice(productPosition, 1);
+        console.log("aplice",x);
+          console.log("array",newArrayForIngredients);
+        setIngredientsToProduct(newArrayForIngredients)
+      }else{
+        newArrayForIngredients[productPosition] = { id: id, quantity: (newArrayForIngredients[productPosition].quantity - 1) }
+        setIngredientsToProduct(newArrayForIngredients)
+      }
+    } else {
+      //setIngredientsToProduct([...ingredientsToProduct, { id: id, quantity: 1 }]);
+    }
     console.log(ingredientsToProduct);
   };
 
@@ -107,6 +193,17 @@ export default function SelectIngredientsModal(props) {
                 <div className="text-center font-semibold text-[16px] tracking-normal leading-5 overflow-y-scroll scrollbarUsers w-full h-44">
                   <>
                     {ingredientData.map((data, i) => {
+                      var cantidad = 0
+
+                      if (ingredientsToProduct.length > 0) {
+                        ingredientsToProduct.map(producto => {
+                          if (data.id == producto.id) {
+                            console.log(data);
+                            //console.log(producto);
+                            cantidad = producto.quantity;
+                          }
+                        })
+                      }
                       {
                         if (
                           data.ingredientName
@@ -144,8 +241,25 @@ export default function SelectIngredientsModal(props) {
                                 </p>
                               </div>
                               <div className="py-3 border-b border-[#E9E9EB] w-full inline-block truncate">
-                                <p >
-                                  {ingredientsToProduct.includes(data.id) ? (
+                                <p className="text-center flex items-center">
+                                  <button
+                                    className="hover:bg-red-800 bg-red-500 p-1 mx-1 rounded-full h-[31px]"
+                                    onClick={() => { removeToShowList(data); removeIngredient(data.id) }}
+                                  >
+                                    <span className="material-icons">
+                                      remove
+                                    </span>
+                                  </button>
+                                  <h1>{cantidad}</h1>
+                                  <button
+                                    onClick={() => { addToShowList(data); addIngredient(data.id) }}
+                                    className="bg-green-500 p-1 mx-1 rounded-full max-h h-[31px] hover:bg-green-800"
+                                  >
+                                    <span className="material-icons">
+                                      add
+                                    </span>
+                                  </button>
+                                  {/* {ingredientsToProduct.includes(data.id) ? (
                                     <button
                                       className="hover:bg-red-800 bg-red-500 p-1 rounded-full h-[31px]"
                                       onClick={() => removeIngredient(data.id)}
@@ -163,7 +277,7 @@ export default function SelectIngredientsModal(props) {
                                         add
                                       </span>
                                     </button>
-                                  )}
+                                  )} */}
                                 </p>
                               </div>
                             </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
 import { database } from "../lib/firebaseConfig";
 import Swal from "sweetalert2";
 import ImageUplaod from "./imageUpload";
@@ -20,6 +20,9 @@ const NewProductModal = (props) => {
   const [productImageUrl, setProductImageUrl] = useState();
   const [categories, setCategories] = useState();
   const [ingredientsToProduct, setIngredientsToProduct] = useState([]);
+  const [ingredientsForProduct, setIngredientsForProduct] = useState([]);
+  const [totalOfProduct, setTotalOfProduct] = useState(0)
+  var allIngredients = []
 
   const [showSelectIngredientsModal, setShowSelectIngredientsModal] =
     useState(false);
@@ -56,6 +59,8 @@ const NewProductModal = (props) => {
       categoryId: data.categoryName,
       description: data.description,
       name: data.name,
+      totalPrice: totalOfProduct,
+      creationPrice: data.creationPrice,
       price: data.price,
       productImgUrl: `${productImageUrl != undefined ? productImageUrl : ""}`,
       ingredientsForProduct: ingredientsToProduct,
@@ -76,9 +81,89 @@ const NewProductModal = (props) => {
       });
   };
 
+  const getPrice = () => {
+    var total = 0
+    ingredientsForProduct.map(ingredientInfo => {
+      ingredientsToProduct.map(ingredient => {
+        if (ingredientInfo.id == ingredient.id) {
+          total += (ingredientInfo.ingredientPrice * ingredient.quantity)
+        }
+      })
+    })
+    document.getElementById("priceOfProduct").value = total
+    var priceOfCreation = parseFloat(document.getElementById("priceOfCreation").value)
+    var ingredientsAndCreation = total + priceOfCreation
+
+    var totalWithIva = (ingredientsAndCreation+(ingredientsAndCreation * 0.13))
+    setTotalOfProduct(totalWithIva)
+  }
+
+  const getIngredients = async (uid) => {
+    console.log(uid);
+    let ingredientsRef = doc(database, `mossy/data/ingredient`, uid);
+
+    await getDoc(ingredientsRef).then(async (ingredient) => {
+      var ingredient = { ...ingredient.data(), id: ingredient.id };
+      //console.log(ingredient);
+      if (!allIngredients.includes(ingredient)) {
+        allIngredients.push(ingredient)
+      }
+    });
+    console.log(allIngredients);
+    setIngredientsForProduct(allIngredients);
+  };
+
+  const updateTotalOfProductFromCreation = function (e) {
+    //result.innerHTML = e.target.value;
+    console.log(e.target.value);
+
+    var precioDeProducto = document.getElementById('priceOfProduct').value
+    var precioDeCreacion = e.target.value
+
+    if (precioDeProducto == 0) {
+      setTotalOfProduct((parseFloat(precioDeCreacion) + (parseFloat(precioDeCreacion) * 0.13)))
+    } else {
+      var total = (parseFloat(precioDeCreacion) + parseFloat(precioDeProducto))
+      setTotalOfProduct(total + (total * 0.13))
+    }
+  }
+
+  const updateTotalOfProductFromPrice = function (e) {
+    var precioDeCreacion = document.getElementById('priceOfCreation').value
+    var precioDeProducto = e.target.value
+
+    if (precioDeCreacion == 0) {
+      setTotalOfProduct(precioDeProducto)
+    } else {
+      var total = (parseFloat(precioDeProducto) + parseFloat(precioDeCreacion))
+      setTotalOfProduct(total)
+    }
+  }
+
   useEffect(() => {
     getCategoriesData();
+
+    var priceOfCreationInput = document.getElementById('priceOfCreation');
+    priceOfCreationInput.addEventListener('input', updateTotalOfProductFromCreation);
+    priceOfCreationInput.addEventListener('propertychange', updateTotalOfProductFromCreation);
+
+    var priceOfProductInput = document.getElementById('priceOfProduct');
+    priceOfProductInput.addEventListener('input', updateTotalOfProductFromPrice);
+    priceOfProductInput.addEventListener('propertychange', updateTotalOfProductFromPrice);
   }, []);
+
+  useEffect(() => {
+    ingredientsToProduct.map((ingredientUid, i) => {
+      console.log(ingredientUid);
+      getIngredients(ingredientUid.id);
+    });
+  }, [ingredientsToProduct])
+
+  useEffect(() => {
+    getPrice()
+  }, [allIngredients])
+
+
 
   return (
     <>
@@ -145,14 +230,40 @@ const NewProductModal = (props) => {
               />
             </div>
             <div className="flex flex-col lg:flex-row justify-between my-2">
+              <label className="text-white">Costo de creación</label>
+              <input
+                id="priceOfCreation"
+                className="rounded px-2"
+                type="number"
+                placeholder="0"
+                min="1"
+                step="any"
+                {...register("creationPrice", { required: true, maxLength: 80 })}
+              />
+            </div>
+            <div className="flex flex-col lg:flex-row justify-between my-2">
               <label className="text-white">Precio del producto</label>
               <input
+                id="priceOfProduct"
                 className="rounded px-2"
                 type="number"
                 placeholder="0"
                 min="1"
                 step="any"
                 {...register("price", { required: true, maxLength: 80 })}
+              />
+            </div>
+            <div className="flex flex-col lg:flex-row justify-between my-2">
+              <label className="text-white">Precio final del producto</label>
+              <input
+                id="totalPriceOfProduct"
+                className="rounded px-2"
+                type="number"
+                placeholder="0"
+                min="1"
+                step="any"
+                value={totalOfProduct}
+                {...register("totalPrice", { required: true, maxLength: 80 })}
               />
             </div>
             <div className="flex flex-col lg:flex-row justify-between my-2">
@@ -171,9 +282,10 @@ const NewProductModal = (props) => {
               <label className="text-white">Asociar ingredientes</label>
               <input
                 onClick={() => {
+                  document.getElementById("priceOfProduct").value = 0;
                   setShowSelectIngredientsModal(true);
                 }}
-                className="text-[1rem] px-2 py-1 bg-blue-600 text-white rounded-xl hover:bg-green-700 "
+                className="text-[1rem] px-2 py-1 bg-green-600 text-white rounded-xl hover:bg-green-700 hover:cursor-pointer"
                 type="button"
                 value={"+ Añadir ingredientes"}
               />
