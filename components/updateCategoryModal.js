@@ -15,6 +15,8 @@ const UpdateCategoryModal = (props) => {
   const [categoryDescription, setCategoryDescription] = useState(
     props.categoryDescription
   );
+  const getCategoryData = () => props.getCategoryData()
+
   useEffect(() => {
     console.log(props);
   }, []);
@@ -47,6 +49,8 @@ const UpdateCategoryModal = (props) => {
       categoryImage: eventImageUrl,
     })
       .then(() => {
+        //getCategoryData()
+        window.location.reload(true);
         props.closeModal();
         Toast.fire({
           icon: "success",
