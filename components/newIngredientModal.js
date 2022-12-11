@@ -1,5 +1,5 @@
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { database } from "../lib/firebaseConfig";
@@ -87,10 +87,8 @@ export default function NewIngredientModal(props) {
       createIngredient(data);
     }
   };
-  useLayoutEffect(() => {
-    console.log("object");
+  useEffect(() => {
     if (props.isEdit) {
-      console.log("object");
       setIngredientName(props.data.ingredientName);
       setIngredientMeasure(props.data.ingredientMeasure);
       setIngredientSupplier(props.data.ingredientSupplier);
