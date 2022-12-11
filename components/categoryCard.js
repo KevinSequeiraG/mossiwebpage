@@ -56,15 +56,15 @@ const CategoryCard = (props) => {
 
   return (
     <>
-      <div className="card flex flex-col">
-        <div className="z-[2] bg-[#191c29] cardSize">
+      <div className="card flex flex-col w-11/12 lg:w-full">
+        <div className="z-[2] bg-[#191c29] ">
           <img
             src={
               props.data.categoryImage != ""
                 ? props.data.categoryImage
                 : "./Images/Panaderia.png"
             }
-            className="rounded-lg"
+            className="rounded-t-lg"
           ></img>
           <h1 className="text-gray-200 mt-2 px-4">{props.data.categoryName}</h1>
           <p className="text-gray-200 text-[1rem] mt-4 px-4">
@@ -78,7 +78,7 @@ const CategoryCard = (props) => {
               Ver productos
             </button>
           </Link>
-          <div className="mt-6">
+          <div className="my-6">
             {props.showMaintenance ? (
               <button
                 onClick={() => {

@@ -45,10 +45,10 @@ const ProductCard = (props) => {
 
   return (
     <>
-      <div className="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full max-w-[300px] min-w-[300px] lg:!min-w-[389px] lg:!max-w-[389px] bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <div className="p-5">
           <img
-            className="rounded-[10px] object-cover"
+            className="rounded-[10px] object-cover min-w-full h-56 max-h-[14rem] min-h-[14rem]"
             src={props.data.productImgUrl?props.data.productImgUrl:"https://cdn.shopify.com/s/files/1/0229/0839/files/Untitled_design__1.png?2393&format=jpg&quality=90"}
             alt="product image"
           />

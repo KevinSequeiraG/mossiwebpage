@@ -1,5 +1,5 @@
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { database } from "../lib/firebaseConfig";
@@ -87,7 +87,7 @@ export default function NewIngredientModal(props) {
       createIngredient(data);
     }
   };
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (props.isEdit) {
       console.log(props.data);
       setIngredientName(props.data.ingredientName);
@@ -117,7 +117,7 @@ export default function NewIngredientModal(props) {
           <div className="flex flex-col lg:flex-row justify-between my-2">
             <label className="text-white">Nombre</label>
             <input
-              value={ingredientName}
+              defaultValue={ingredientName}
               className="rounded px-2"
               type="text"
               placeholder="Nombre"
@@ -127,7 +127,7 @@ export default function NewIngredientModal(props) {
           <div className="flex flex-col lg:flex-row justify-between my-2">
             <label className="text-white">Tipo de medida</label>
             <input
-              value={ingredientMeasure}
+              defaultValue={ingredientMeasure}
               className="rounded px-2"
               type="text"
               placeholder="Medida"
@@ -140,7 +140,7 @@ export default function NewIngredientModal(props) {
           <div className="flex flex-col lg:flex-row justify-between my-2">
             <label className="text-white">Proveedor</label>
             <input
-              value={ingredientSupplier}
+              defaultValue={ingredientSupplier}
               className="rounded px-2"
               type="text"
               placeholder="Proveedor"
@@ -153,7 +153,7 @@ export default function NewIngredientModal(props) {
           <div className="flex flex-col lg:flex-row justify-between my-2">
             <label className="text-white">Precio</label>
             <input
-              value={ingredientPrice}
+              defaultValue={ingredientPrice}
               className="rounded px-2"
               type="number"
               placeholder="0"
