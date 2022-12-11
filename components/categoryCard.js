@@ -14,9 +14,12 @@ import {
 import Swal from "sweetalert2";
 import Link from "next/link";
 import UpdateCategoryModal from "./updateCategoryModal";
+import { useRouter } from "next/router";
 
 const CategoryCard = (props) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const getCategoryData = () => props.getCategoryData()
+  const router = useRouter();
 
   const closeUpdateCatModal = () => {
     setShowUpdateModal(false);
@@ -28,7 +31,7 @@ const CategoryCard = (props) => {
     //const q = query(categoryToDelete, where("categoryName", "==", props.data.categoryName))
     deleteDoc(categoryToDelete)
       .then(() => {
-        props.getCategoryData();
+        getCategoryData()
         Toast.fire({
           icon: "success",
           title: `Categoria removida con éxito`,
@@ -86,7 +89,7 @@ const CategoryCard = (props) => {
                 }}
                 className="bg-red-500 text-white rounded-[50%] border border-white w-[2rem] h-[2rem] mx-2 hover:bg-red-800"
               >
-                <span className="material-icons">close</span>
+                <span className="material-icons">delete</span>
               </button>
             ) : null}
             {props.showMaintenance ? (
@@ -103,7 +106,7 @@ const CategoryCard = (props) => {
       {showUpdateModal ? (
         <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999999] fixed">
           <UpdateCategoryModal
-            getCategoryData={props.getCategoryData()}
+            getCategoryData={() => getCategoryData}
             closeModal={closeUpdateCatModal}
             categoryName={props.data.categoryName}
             categoryDescription={props.data.categoryDescription}

@@ -36,6 +36,7 @@ const Menu = () => {
   };
 
   const getCategoryData = async () => {
+    console.log("es aca");
     const categoryRef = collection(database, `mossy/data/category`);
     await getDocs(categoryRef).then((response) => {
       setCategoryData(
@@ -49,6 +50,7 @@ const Menu = () => {
   useEffect(() => {
     getCategoryData();
   }, []);
+
   useEffect(() => {
     console.log("length", categoryData.length);
     console.log("categorias: ", categoryData);

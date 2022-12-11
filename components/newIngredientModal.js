@@ -88,8 +88,9 @@ export default function NewIngredientModal(props) {
     }
   };
   useLayoutEffect(() => {
+    console.log("object");
     if (props.isEdit) {
-      console.log(props.data);
+      console.log("object");
       setIngredientName(props.data.ingredientName);
       setIngredientMeasure(props.data.ingredientMeasure);
       setIngredientSupplier(props.data.ingredientSupplier);
