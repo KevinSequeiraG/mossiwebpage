@@ -116,7 +116,7 @@ export default function NewIngredientModal(props) {
           <div className="flex flex-col lg:flex-row justify-between my-2">
             <label className="text-white">Nombre</label>
             <input
-              value={ingredientName}
+              defaultValue={ingredientName}
               className="rounded px-2"
               type="text"
               placeholder="Nombre"
@@ -126,7 +126,7 @@ export default function NewIngredientModal(props) {
           <div className="flex flex-col lg:flex-row justify-between my-2">
             <label className="text-white">Tipo de medida</label>
             <input
-              value={ingredientMeasure}
+              defaultValue={ingredientMeasure}
               className="rounded px-2"
               type="text"
               placeholder="Medida"
@@ -139,7 +139,7 @@ export default function NewIngredientModal(props) {
           <div className="flex flex-col lg:flex-row justify-between my-2">
             <label className="text-white">Proveedor</label>
             <input
-              value={ingredientSupplier}
+              defaultValue={ingredientSupplier}
               className="rounded px-2"
               type="text"
               placeholder="Proveedor"
@@ -152,7 +152,7 @@ export default function NewIngredientModal(props) {
           <div className="flex flex-col lg:flex-row justify-between my-2">
             <label className="text-white">Precio</label>
             <input
-              value={ingredientPrice}
+              defaultValue={ingredientPrice}
               className="rounded px-2"
               type="number"
               placeholder="0"

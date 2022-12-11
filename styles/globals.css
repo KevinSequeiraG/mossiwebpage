@@ -77,8 +77,8 @@
 
 .card {
   background: #191c29;
-  width: var(--card-width);
-  height: var(--card-height);
+  /* width: var(--card-width);
+  height: var(--card-height); */
   padding: 3px;
   position: relative;
   border-radius: 6px;
@@ -92,8 +92,8 @@
 }
 
 .cardSize {
-  width: var(--card-width);
-  height: var(--card-height);
+  width: var(--card-width) !important;
+  height: var(--card-height) !important;
 }
 
 .card::before {
@@ -187,10 +187,11 @@
 
 .scrollbar::-webkit-scrollbar-track {
   background: #fff !important;
+  border-radius: 50px !important;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  background: #e9e9eb !important;
+  background: #ababae !important;
   border-radius: 50px !important;
 }
 
@@ -221,7 +222,7 @@ tr th:nth-child(1) {
   border-radius: 0.625rem 0 0 0.625rem;
 }
 
-.tableSelectIngredient{
+.tableSelectIngredient {
   width: 100% !important;
   max-height: 15rem !important;
 }

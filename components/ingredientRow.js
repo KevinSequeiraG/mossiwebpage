@@ -40,7 +40,9 @@ export default function IngredientRow(props) {
   return (
     <>
       <tr className="bg-blue-200 text-black">
-        <td className="p-3 text-center font-medium">{props.data.ingredientName}</td>
+        <td className="p-3 text-center font-medium">
+          {props.data.ingredientName}
+        </td>
         <td className="p-3 text-center">{props.data.ingredientMeasure}</td>
         <td className="p-3 text-center">{props.data.ingredientSupplier}</td>
         <td className="p-3 text-center">₡{props.data.ingredientPrice}</td>
@@ -64,6 +66,7 @@ export default function IngredientRow(props) {
           </a>
         </td>
       </tr>
+
       {openNewIngredientModal ? (
         <NewIngredientModal
           closeModal={() => setOpenNewIngredientModal(false)}

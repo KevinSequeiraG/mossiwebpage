@@ -99,7 +99,7 @@ export default function Ingredients() {
                     </tr>
                   </thead>
                   <tbody>
-                    {ingredientData.map((data) => {
+                    {ingredientData.map((data,i) => {
                       if (
                         data.ingredientName
                           .toString()
@@ -110,14 +110,12 @@ export default function Ingredients() {
                           .toLowerCase()
                           .includes(searchInput.toString().toLowerCase())
                       ) {
-                        return (
-                          <>
+                        return (                       
                             <IngredientRow
-                              key={data.id}
+                              key={i}
                               data={data}
                               getIngredientData={getIngredientData}
-                            />
-                          </>
+                            />                   
                         );
                       }
                     })}
