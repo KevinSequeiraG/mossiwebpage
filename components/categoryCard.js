@@ -59,15 +59,15 @@ const CategoryCard = (props) => {
 
   return (
     <>
-      <div className="card flex flex-col w-11/12 lg:w-full">
-        <div className="z-[2] bg-[#191c29] ">
+      <div className="card flex flex-col w-11/12 lg:w-full !min-h-full">
+        <div className="z-[2] bg-[#191c29] w-full !min-h-full">
           <img
             src={
               props.data.categoryImage != ""
                 ? props.data.categoryImage
                 : "./Images/Panaderia.png"
             }
-            className="rounded-t-lg"
+            className="rounded-t-lg h-64 lg:h-96 min-w-full w-full object-cover"
           ></img>
           <h1 className="text-gray-200 mt-2 px-4">{props.data.categoryName}</h1>
           <p className="text-gray-200 text-[1rem] mt-4 px-4">

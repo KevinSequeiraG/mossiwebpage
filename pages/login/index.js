@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useUserAuth } from "../../lib/userAuthContext";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 function Login() {
   const { logIn, logOut, changePassword } = useUserAuth();
@@ -80,7 +81,29 @@ function Login() {
 
   return (
     <>
-      <section className="h-screen bgMain min-h-screen overflow-auto">
+      <section className="h-screen bgMain min-h-screen overflow-auto relative">
+        <Link href={"/"}>
+          <button
+            className="absolute top-5 left-5 md:hover:bg-purple-500 md:border-0 md:p-0 text-gray-700 text-[14px] lg:text-[1rem] hover:text-white bg-purple-400 rounded-full hover:shadow-lg"
+          >
+            <div className="p-3 flex items-center space-x-2">
+              <svg
+                className="block"
+                xmlns="http://www.w3.org/2000/svg"
+                width="17.603"
+                height="17.603"
+                viewBox="0 0 17.603 17.603"
+              >
+                <path
+                  id="Icon_material-arrow_back"
+                  d="M23.6,13.7H10.214l6.15-6.15L14.8,6,6,14.8l8.8,8.8,1.551-1.551L10.214,15.9H23.6Z"
+                  transform="translate(-6 -6)"
+                  fill="white"
+                />
+              </svg>            
+            </div>
+          </button>
+        </Link>
         <div className="container px-6 py-12 h-full mx-auto w-full">
           <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
             <div className="md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
