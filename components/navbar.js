@@ -136,7 +136,7 @@ export const NavBar = () => {
                   href="#"
                   className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white"
                 >
-                  Contactanos
+                  Contáctanos
                 </a>
               </li>
               </Link>
