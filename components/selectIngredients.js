@@ -222,7 +222,7 @@ export default function SelectIngredientsModal(props) {
                             >
                               <div className="py-3 border-b border-[#E9E9EB] w-full marker:inline-block truncate">
                                 <p>
-                                  {data.ingredientName} asadad asadad
+                                  {data.ingredientName}
                                 </p>
                               </div>
                               <div className="py-3 border-b border-[#E9E9EB] w-full hidden lg:inline-block truncate">
@@ -237,7 +237,7 @@ export default function SelectIngredientsModal(props) {
                               </div>
                               <div className="py-3 border-b border-[#E9E9EB] w-full inline-block truncate">
                                 <p >
-                                  {data.ingredientPrice}
+                                ₡{data.ingredientPrice}
                                 </p>
                               </div>
                               <div className="py-3 border-b border-[#E9E9EB] w-full inline-block truncate">

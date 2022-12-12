@@ -287,7 +287,7 @@ const NewProductModal = (props) => {
                 }}
                 className="text-[1rem] px-2 py-1 bg-green-600 text-white rounded-xl hover:bg-green-700 hover:cursor-pointer"
                 type="button"
-                value={"+ Añadir ingredientes"}
+                value={"+ Asociar ingredientes"}
               />
             </div>
             <input
