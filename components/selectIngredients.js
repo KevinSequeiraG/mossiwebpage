@@ -241,7 +241,7 @@ export default function SelectIngredientsModal(props) {
                                 </p>
                               </div>
                               <div className="py-3 border-b border-[#E9E9EB] w-full inline-block truncate">
-                                <p className="text-center flex items-center">
+                                <div className="text-center flex items-center">
                                   <button
                                     className="hover:bg-red-800 bg-red-500 p-1 mx-1 rounded-full h-[31px]"
                                     onClick={() => { removeToShowList(data); removeIngredient(data.id) }}
@@ -278,7 +278,7 @@ export default function SelectIngredientsModal(props) {
                                       </span>
                                     </button>
                                   )} */}
-                                </p>
+                                </div>
                               </div>
                             </div>
                           );
