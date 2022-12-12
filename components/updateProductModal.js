@@ -247,6 +247,7 @@ const UpdateProductModal = (props) => {
                       onClick={() => setCategoryName(categorie.id)}
                       key={categorie.id}
                       value={categorie.id}
+                      selected={categorie.id==props.data.categoryId?true:false}
                     >
                       {categorie.categoryName}
                     </option>
