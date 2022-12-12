@@ -55,7 +55,7 @@ const ProductCard = (props) => {
         </div>
 
         <div className="px-5 pb-5">
-          <h5 className="text-[16px] lg:text-[18px] font-semibold tracking-tight text-gray-900 dark:text-white">
+          <h5 className="text-[16px] lg:text-[18px] font-semibold tracking-tight text-gray-900 dark:text-white truncate">
             {props.data.name}
           </h5>
           <h5 className="text-[12px] lg:[14px] font-semibold tracking-tight text-gray-900 dark:text-white my-1">

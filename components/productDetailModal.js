@@ -50,7 +50,7 @@ const ProductDetailModal = (props) => {
         alt="product image"
       />
       <div className="p-5">
-        <h1 className="text-[16px] lg:text-[20px] font-semibold tracking-tight text-gray-900 dark:text-white text-center border-b w-min truncate mx-auto mb-5 ">
+        <h1 className="text-[16px] lg:text-[20px] font-semibold tracking-tight text-gray-900 dark:text-white text-center border-b w-min mx-auto mb-5">
           {props.data.name}
         </h1>
         <h2 className="text-[14px] lg:[16px] font-semibold tracking-tight text-gray-900 dark:text-white my-1 text-justify mb-5">

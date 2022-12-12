@@ -205,16 +205,16 @@ const UpdateProductModal = (props) => {
     <>
       <div className="w-5/6 md:w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
         <button
-          onClick={() => {
-            props.closeModal();
-          }}
-          className="absolute -right-6 lg:-right-10 -top-6 lg:-top-10 bg-red-500 text-white rounded-[50%] border border-white w-[3rem] lg:w-[4rem] z-[9999] h-[3rem] lg:h-[4rem] mx-2 hover:bg-red-800"
-        >
-          <span className="material-icons mt-1 !text-[30px] lg:!text-[50px]">
-            close
-          </span>
-        </button>
-        <div>
+        onClick={() => {
+          props.closeModal();
+        }}
+        className="absolute -right-5 -top-5 lg:-right-10 lg:-top-10 bg-red-500 text-white rounded-[50%] border border-white w-[2rem] lg:w-[4rem] z-[9999] h-[2rem] lg:h-[4rem] mx-2 hover:bg-red-800"
+      >
+        <span className="material-icons !text-[15px] mt-1 lg:!text-[50px]">
+          close
+        </span>
+      </button>
+        <div className="max-h-96 flex-col overflow-y-auto overflow-x-hidden scrollbar">
           <p className="text-center text-[18px] lg:text-[1.5rem] text-white">
             Acá actualizás un producto
           </p>
@@ -332,7 +332,7 @@ const UpdateProductModal = (props) => {
                 <label className="text-white">Lista de ingredientes</label>
                 <br />
                 <button
-                  className="hover:bg-yellow-500 bg-yellow-600 px-2 py-1 border border-white rounded-lg text-[12px]"
+                  className="hover:bg-yellow-500 bg-yellow-600 px-2 py-1 border border-white rounded-lg my-2 text-[14px]"
                   onClick={() => { event.preventDefault(); setShowSelectIngredientsModal(true) }}
                 >
                   Editar lista de ingredientes
