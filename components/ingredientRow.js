@@ -68,21 +68,25 @@ export default function IngredientRow(props) {
       </tr>
 
       {openNewIngredientModal ? (
-        <NewIngredientModal
-          closeModal={() => setOpenNewIngredientModal(false)}
-          getIngredientData={() => props.getIngredientData()}
-          data={props.data}
-          isEdit={true}
-        />
+        <div className="w-screen h-screen bg-black bg-opacity-50 left-0 top-0 z-[999] fixed">
+          <NewIngredientModal
+            closeModal={() => setOpenNewIngredientModal(false)}
+            getIngredientData={() => props.getIngredientData()}
+            data={props.data}
+            isEdit={true}
+          />
+        </div>
       ) : null}
       {openDeleteModal ? (
-        <DeleteModal
-          closeModal={() => setDeleteModal(false)}
-          getIngredientData={() => props.getIngredientData()}
-          data={props.data}
-          deleteFunction={deleteIngredient}
-          whatToDelete={"el ingrediente: " + props.data.ingredientName}
-        />
+        <div className="w-screen h-screen bg-black bg-opacity-50 left-0 top-0 z-[999] fixed">
+          <DeleteModal
+            closeModal={() => setDeleteModal(false)}
+            getIngredientData={() => props.getIngredientData()}
+            data={props.data}
+            deleteFunction={deleteIngredient}
+            whatToDelete={"el ingrediente: " + props.data.ingredientName}
+          />
+        </div>
       ) : null}
     </>
   );

@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 
 const CategoryCard = (props) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const getCategoryData = () => props.getCategoryData()
+  const getCategoryData = () => props.getCategoryData();
   const router = useRouter();
 
   const closeUpdateCatModal = () => {
@@ -31,7 +31,7 @@ const CategoryCard = (props) => {
     //const q = query(categoryToDelete, where("categoryName", "==", props.data.categoryName))
     deleteDoc(categoryToDelete)
       .then(() => {
-        getCategoryData()
+        getCategoryData();
         Toast.fire({
           icon: "success",
           title: `Categoria removida con éxito`,
@@ -104,7 +104,7 @@ const CategoryCard = (props) => {
         </div>
       </div>
       {showUpdateModal ? (
-        <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999999] fixed">
+        <div className="w-full h-screen bg-black bg-opacity-50 left-0 top-0 fixed z-[9999]">
           <UpdateCategoryModal
             getCategoryData={() => getCategoryData}
             closeModal={closeUpdateCatModal}

@@ -1,27 +1,24 @@
 import { useState } from "react";
 import ProductDetailModal from "./productDetailModal";
 import { database } from "../lib/firebaseConfig";
-import {
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
 import UpdateProductModal from "./updateProductModal";
 
 const ProductCard = (props) => {
   const [closeModal, setCloseModal] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false)
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const deleteCategory = (id) => {
     let categoryToDelete = doc(database, `mossy/data/product`, id);
 
     deleteDoc(categoryToDelete)
       .then(() => {
-        props.getProductData()
+        props.getProductData();
         Toast.fire({
           icon: "success",
           title: `producto eliminado con éxito`,
-        })
+        });
       })
       .catch((err) => {
         Toast.fire({
@@ -49,7 +46,11 @@ const ProductCard = (props) => {
         <div className="p-5">
           <img
             className="rounded-[10px] object-cover min-w-full h-56 max-h-[14rem] min-h-[14rem]"
-            src={props.data.productImgUrl?props.data.productImgUrl:"https://cdn.shopify.com/s/files/1/0229/0839/files/Untitled_design__1.png?2393&format=jpg&quality=90"}
+            src={
+              props.data.productImgUrl
+                ? props.data.productImgUrl
+                : "https://cdn.shopify.com/s/files/1/0229/0839/files/Untitled_design__1.png?2393&format=jpg&quality=90"
+            }
             alt="product image"
           />
         </div>
@@ -76,27 +77,47 @@ const ProductCard = (props) => {
             </div>
           </div>
           <div className="mx-auto w-min flex mt-2">
-            {props.showMaintenance ? <button onClick={() => { deleteCategory(props.data.id) }} className="bg-red-500 text-white rounded-[50%] border border-white w-[2rem] h-[2rem] mx-2 hover:bg-red-800 flex items-center justify-center">
-              <span className="material-icons">
-                close
-              </span>
-            </button> : null}
-            {props.showMaintenance ? <button className="bg-yellow-500 text-white rounded-[50%] border border-white w-[2rem] h-[2rem] mx-2 hover:bg-yellow-600 flex items-center justify-center" onClick={() => setShowUpdateModal(true)}>
-              <span className="material-icons">
-                edit
-              </span>
-            </button> : null}
+            {props.showMaintenance ? (
+              <button
+                onClick={() => {
+                  deleteCategory(props.data.id);
+                }}
+                className="bg-red-500 text-white rounded-[50%] border border-white w-[2rem] h-[2rem] mx-2 hover:bg-red-800 flex items-center justify-center"
+              >
+                <span className="material-icons">close</span>
+              </button>
+            ) : null}
+            {props.showMaintenance ? (
+              <button
+                className="bg-yellow-500 text-white rounded-[50%] border border-white w-[2rem] h-[2rem] mx-2 hover:bg-yellow-600 flex items-center justify-center"
+                onClick={() => setShowUpdateModal(true)}
+              >
+                <span className="material-icons">edit</span>
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
       {closeModal ? (
-        <div className="w-full h-screen bg-black bg-opacity-50 absolute left-0 top-0 z-[999]">
-          <ProductDetailModal data={props.data} closeModal={() => setCloseModal(false)} />
+        <div className="w-full h-screen bg-black bg-opacity-50 left-0 top-0 z-[999] fixed ">
+          <ProductDetailModal
+            data={props.data}
+            closeModal={() => setCloseModal(false)}
+          />
         </div>
       ) : null}
-      {showUpdateModal ? <div className="w-full h-screen bg-black bg-opacity-50 absolute left-0 top-0 z-[999]" >
-        <UpdateProductModal getProductData={()=>props.getProductData()} closeModal={() => {setShowUpdateModal(false);}} productId={props.data.id} data={props.data}/>
-      </div> : null}
+      {showUpdateModal ? (
+        <div className="w-full h-screen bg-black bg-opacity-50 left-0 top-0 z-[999] fixed ">
+          <UpdateProductModal
+            getProductData={() => props.getProductData()}
+            closeModal={() => {
+              setShowUpdateModal(false);
+            }}
+            productId={props.data.id}
+            data={props.data}
+          />
+        </div>
+      ) : null}
     </>
   );
 };

@@ -5,10 +5,18 @@ import Swal from "sweetalert2";
 import { database } from "../lib/firebaseConfig";
 
 export default function NewIngredientModal(props) {
-  const [ingredientName, setIngredientName] = useState();
-  const [ingredientMeasure, setIngredientMeasure] = useState();
-  const [ingredientSupplier, setIngredientSupplier] = useState();
-  const [ingredientPrice, setIngredientPrice] = useState();
+  const [ingredientName, setIngredientName] = useState(
+    props.isEdit ? props.data.ingredientName : ""
+  );
+  const [ingredientMeasure, setIngredientMeasure] = useState(
+    props.isEdit ? props.data.ingredientMeasure : ""
+  );
+  const [ingredientSupplier, setIngredientSupplier] = useState(
+    props.isEdit ? props.data.ingredientSupplier : ""
+  );
+  const [ingredientPrice, setIngredientPrice] = useState(
+    props.isEdit ? props.data.ingredientPrice : ""
+  );
 
   const {
     register,
@@ -87,14 +95,6 @@ export default function NewIngredientModal(props) {
       createIngredient(data);
     }
   };
-  useEffect(() => {
-    if (props.isEdit) {
-      setIngredientName(props.data.ingredientName);
-      setIngredientMeasure(props.data.ingredientMeasure);
-      setIngredientSupplier(props.data.ingredientSupplier);
-      setIngredientPrice(props.data.ingredientPrice);
-    }
-  }, []);
   return (
     <div className="w-5/6 md:w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
       <button
@@ -103,7 +103,9 @@ export default function NewIngredientModal(props) {
         }}
         className="absolute -right-6 lg:-right-10 -top-6 lg:-top-10 bg-red-500 text-white rounded-[50%] border border-white w-[3rem] lg:w-[4rem] z-[9999] h-[3rem] lg:h-[4rem] mx-2 hover:bg-red-800"
       >
-        <span className="material-icons mt-1 !text-[30px] lg:!text-[50px]">close</span>
+        <span className="material-icons mt-1 !text-[30px] lg:!text-[50px]">
+          close
+        </span>
       </button>
       <div>
         <p className="text-center text-[18px] lg:text-[1.5rem] text-white px-2">
