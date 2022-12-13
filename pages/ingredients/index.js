@@ -99,7 +99,7 @@ export default function Ingredients() {
                     </tr>
                   </thead>
                   <tbody>
-                    {ingredientData.map((data,i) => {
+                    {ingredientData.map((data, i) => {
                       if (
                         data.ingredientName
                           .toString()
@@ -110,12 +110,12 @@ export default function Ingredients() {
                           .toLowerCase()
                           .includes(searchInput.toString().toLowerCase())
                       ) {
-                        return (                       
-                            <IngredientRow
-                              key={i}
-                              data={data}
-                              getIngredientData={getIngredientData}
-                            />                   
+                        return (
+                          <IngredientRow
+                            key={i}
+                            data={data}
+                            getIngredientData={getIngredientData}
+                          />
                         );
                       }
                     })}
@@ -129,10 +129,12 @@ export default function Ingredients() {
         <Footer />
       </div>
       {openNewIngredientModal ? (
-        <NewIngredientModal
-          closeModal={() => setOpenNewIngredientModal(false)}
-          getIngredientData={() => getIngredientData()}
-        />
+        <div className="w-full h-screen bg-black bg-opacity-50 top-0 z-[999] fixed">
+          <NewIngredientModal
+            closeModal={() => setOpenNewIngredientModal(false)}
+            getIngredientData={() => getIngredientData()}
+          />
+        </div>
       ) : null}
     </>
   );

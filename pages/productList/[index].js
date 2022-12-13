@@ -111,7 +111,7 @@ export default function ProductList() {
           <Footer />
         </div>
         {showNewProductModal ? (
-          <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">
+          <div className="w-full h-screen bg-black bg-opacity-50 top-0 z-[999] fixed ">
             <NewProductModal
               closeModal={() => setShowNewProductModal(false)}
               getProductData={() => getProductData()}
