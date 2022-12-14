@@ -54,21 +54,24 @@ export default function SelectIngredientsModal(props) {
     })
 
     if (productExists) {
-      newArrayForIngredients[productPosition] = { id: id, quantity: (ingredientsToProduct[productPosition].quantity + 1) }
       var elemento = document.getElementById("input" + id)
       elemento.value = (ingredientsToProduct[productPosition].quantity + 1)
+      newArrayForIngredients[productPosition] = { id: id, quantity: (ingredientsToProduct[productPosition].quantity + 1) }
+
       setIngredientsToProduct(newArrayForIngredients)
     } else {
-      setIngredientsToProduct([...ingredientsToProduct, { id: id, quantity: 1 }]);
       var elemento = document.getElementById("input" + id)
       elemento.value = 1
+      setIngredientsToProduct([...ingredientsToProduct, { id: id, quantity: 1 }]);
+
     }
 
     console.log(ingredientsToProduct);
   };
 
   const CambioCantidadManual = (event, id) => {
-    var quantity = parseFloat(event.target.value)
+    var cantidad = parseFloat(event.target.value)
+    console.log("CANTIDAD", cantidad);
 
     var newArrayForIngredients = ingredientsToProduct
     var productPosition = 0;
@@ -81,10 +84,11 @@ export default function SelectIngredientsModal(props) {
     })
 
     if (productExists) {
-      newArrayForIngredients[productPosition] = { id: id, quantity: quantity }
+      console.log("ggs");
+      newArrayForIngredients[productPosition] = { id: id, quantity: cantidad }
       setIngredientsToProduct(newArrayForIngredients)
     } else {
-      setIngredientsToProduct([...ingredientsToProduct, { id: id, quantity: 1 }]);
+      setIngredientsToProduct([...ingredientsToProduct, { id: id, quantity: cantidad }]);
     }
   }
 
@@ -139,9 +143,10 @@ export default function SelectIngredientsModal(props) {
         console.log("array", newArrayForIngredients);
         setIngredientsToProduct(newArrayForIngredients)
       } else {
-        newArrayForIngredients[productPosition] = { id: id, quantity: (newArrayForIngredients[productPosition].quantity - 1) }
         var elemento = document.getElementById("input" + id)
         elemento.value = (newArrayForIngredients[productPosition].quantity - 1)
+        newArrayForIngredients[productPosition] = { id: id, quantity: (newArrayForIngredients[productPosition].quantity - 1) }
+
         setIngredientsToProduct(newArrayForIngredients)
       }
     } else {
@@ -334,6 +339,8 @@ export default function SelectIngredientsModal(props) {
             type="button"
             onClick={() => {
               //props.buttonFunction(props.data.id);
+              
+              console.log(ingredientsToProduct);
               props.closeModal();
               props.setIngredientsToProduct(ingredientsToProduct);
             }}
