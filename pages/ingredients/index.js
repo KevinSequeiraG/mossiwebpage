@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import Footer from "../../components/footer";
 import IngredientRow from "../../components/ingredientRow";
@@ -12,7 +12,8 @@ export default function Ingredients() {
   const [openNewIngredientModal, setOpenNewIngredientModal] = useState(false);
   const getIngredientData = async () => {
     const ingredientRef = collection(database, `mossy/data/ingredient`);
-    await getDocs(ingredientRef).then((response) => {
+    const q = query(ingredientRef, orderBy("ingredientName"))
+    await getDocs(q).then((response) => {
       setIngredientData(
         response.docs.map((data) => {
           return { ...data.data(), id: data.id };
