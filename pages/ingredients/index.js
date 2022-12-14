@@ -55,7 +55,7 @@ export default function Ingredients() {
                     }}
                     type="text"
                     name="name"
-                    className="
+                    className="pl-1 
               w-1/2 md:w-1/3
               py-1
               border-b-2 border-blue-600

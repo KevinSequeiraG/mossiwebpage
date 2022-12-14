@@ -45,7 +45,7 @@ export default function IngredientRow(props) {
         </td>
         <td className="p-3 text-center">{props.data.ingredientMeasure}</td>
         <td className="p-3 text-center">{props.data.ingredientSupplier}</td>
-        <td className="p-3 text-center">₡{props.data.ingredientPrice}</td>
+        <td className="p-3 text-center">₡{parseFloat(props.data.ingredientPrice).toFixed(2)}</td>
 
         <td className="p-3 text-center space-x-3">
           <a href="#" className="text-yellow-400 hover:text-gray-100">
