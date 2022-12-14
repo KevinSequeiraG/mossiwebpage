@@ -167,7 +167,7 @@ const NewProductModal = (props) => {
 
   return (
     <>
-      <div className="w-5/6 md:w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
+      <div className="w-5/6 md:w-[60%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
       <button
         onClick={() => {
           props.closeModal();
