@@ -62,6 +62,27 @@ export default function SelectIngredientsModal(props) {
     console.log(ingredientsToProduct);
   };
 
+  const CambioCantidadManual = (event, id) => {
+    var quantity = parseFloat(event.target.value)
+
+    var newArrayForIngredients = ingredientsToProduct
+    var productPosition = 0;
+    var productExists = false;
+    ingredientsToProduct.map((product, i) => {
+      if (product.id == id) {
+        productExists = true
+        productPosition = i
+      }
+    })
+
+    if (productExists) {
+      newArrayForIngredients[productPosition] = { id: id, quantity: quantity}
+      setIngredientsToProduct(newArrayForIngredients)
+    } else {
+      setIngredientsToProduct([...ingredientsToProduct, { id: id, quantity: 1 }]);
+    }
+  }
+
   const removeToShowList = (producto) => {
     var newArrayForIngredients = listToShow
     var productPosition = 0;
@@ -74,18 +95,18 @@ export default function SelectIngredientsModal(props) {
     })
 
     if (productExists) {
-      if (listToShow.length>0) {
+      if (listToShow.length > 0) {
         if (listToShow[productPosition].quantity == 1) {
-          var x =newArrayForIngredients.splice(productPosition, 1);
-          console.log("aplice",x);
-          console.log("array",newArrayForIngredients);
+          var x = newArrayForIngredients.splice(productPosition, 1);
+          console.log("aplice", x);
+          console.log("array", newArrayForIngredients);
           setListToShow(newArrayForIngredients)
-        }else{
+        } else {
           newArrayForIngredients[productPosition] = { product: producto, quantity: (newArrayForIngredients[productPosition].quantity - 1) }
           setListToShow(newArrayForIngredients)
-        }   
+        }
       }
-         
+
     } else {
       setListToShow([...listToShow, { product: producto, quantity: 1 }]);
     }
@@ -108,11 +129,11 @@ export default function SelectIngredientsModal(props) {
 
     if (productExists) {
       if (ingredientsToProduct[productPosition].quantity == 1) {
-        var x =newArrayForIngredients.splice(productPosition, 1);
-        console.log("aplice",x);
-          console.log("array",newArrayForIngredients);
+        var x = newArrayForIngredients.splice(productPosition, 1);
+        console.log("aplice", x);
+        console.log("array", newArrayForIngredients);
         setIngredientsToProduct(newArrayForIngredients)
-      }else{
+      } else {
         newArrayForIngredients[productPosition] = { id: id, quantity: (newArrayForIngredients[productPosition].quantity - 1) }
         setIngredientsToProduct(newArrayForIngredients)
       }
@@ -132,7 +153,7 @@ export default function SelectIngredientsModal(props) {
 
   return (
     <>
-      <div className="w-10/12 md:w-[35%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5 max-h-96">
+      <div className="w-10/12 md:w-[50%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5 max-h-96">
         <button
           onClick={() => {
             props.closeModal();
@@ -194,7 +215,6 @@ export default function SelectIngredientsModal(props) {
                   <>
                     {ingredientData.map((data, i) => {
                       var cantidad = 0
-
                       if (ingredientsToProduct.length > 0) {
                         ingredientsToProduct.map(producto => {
                           if (data.id == producto.id) {
@@ -237,7 +257,7 @@ export default function SelectIngredientsModal(props) {
                               </div>
                               <div className="py-3 border-b border-[#E9E9EB] w-full inline-block truncate">
                                 <p >
-                                ₡{data.ingredientPrice}
+                                  ₡{data.ingredientPrice}
                                 </p>
                               </div>
                               <div className="py-3 border-b border-[#E9E9EB] w-full inline-block truncate">
@@ -250,7 +270,9 @@ export default function SelectIngredientsModal(props) {
                                       remove
                                     </span>
                                   </button>
-                                  <h1>{cantidad}</h1>
+                                  <input className="w-[3rem] !bg-gray-700 border border-gray-300 rounded-md" type="number" min={0} onChange={(e)=>CambioCantidadManual(e, data.id)}>
+                                  </input>
+                                  {/* <h1>{cantidad}</h1> */}
                                   <button
                                     onClick={() => { addToShowList(data); addIngredient(data.id) }}
                                     className="bg-green-500 p-1 mx-1 rounded-full max-h h-[31px] hover:bg-green-800"

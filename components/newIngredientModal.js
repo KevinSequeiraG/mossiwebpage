@@ -157,10 +157,11 @@ export default function NewIngredientModal(props) {
               defaultValue={ingredientPrice}
               className="rounded px-2"
               type="number"
+              step="any"
+              min={0}
               placeholder="0"
               {...register("ingredientPrice", {
                 required: true,
-                maxLength: 100,
               })}
             />
           </div>
