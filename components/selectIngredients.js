@@ -1,4 +1,5 @@
-import { collection, getDocs } from "firebase/firestore";
+import { data } from "autoprefixer";
+import { collection, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { database } from "../lib/firebaseConfig";
 import IngredientRow from "./ingredientRow";
@@ -54,9 +55,13 @@ export default function SelectIngredientsModal(props) {
 
     if (productExists) {
       newArrayForIngredients[productPosition] = { id: id, quantity: (ingredientsToProduct[productPosition].quantity + 1) }
+      var elemento = document.getElementById("input" + id)
+      elemento.value = (ingredientsToProduct[productPosition].quantity + 1)
       setIngredientsToProduct(newArrayForIngredients)
     } else {
       setIngredientsToProduct([...ingredientsToProduct, { id: id, quantity: 1 }]);
+      var elemento = document.getElementById("input" + id)
+      elemento.value = 1
     }
 
     console.log(ingredientsToProduct);
@@ -76,7 +81,7 @@ export default function SelectIngredientsModal(props) {
     })
 
     if (productExists) {
-      newArrayForIngredients[productPosition] = { id: id, quantity: quantity}
+      newArrayForIngredients[productPosition] = { id: id, quantity: quantity }
       setIngredientsToProduct(newArrayForIngredients)
     } else {
       setIngredientsToProduct([...ingredientsToProduct, { id: id, quantity: 1 }]);
@@ -135,6 +140,8 @@ export default function SelectIngredientsModal(props) {
         setIngredientsToProduct(newArrayForIngredients)
       } else {
         newArrayForIngredients[productPosition] = { id: id, quantity: (newArrayForIngredients[productPosition].quantity - 1) }
+        var elemento = document.getElementById("input" + id)
+        elemento.value = (newArrayForIngredients[productPosition].quantity - 1)
         setIngredientsToProduct(newArrayForIngredients)
       }
     } else {
@@ -270,7 +277,7 @@ export default function SelectIngredientsModal(props) {
                                       remove
                                     </span>
                                   </button>
-                                  <input className="w-[3rem] !bg-gray-700 border border-gray-300 rounded-md" type="number" min={0} onChange={(e)=>CambioCantidadManual(e, data.id)}>
+                                  <input id={"input" + data.id} placeholder="0" className="w-[3rem] !bg-gray-700 border border-gray-300 rounded-md" type="number" min={0} onChange={(e) => CambioCantidadManual(e, data.id)}>
                                   </input>
                                   {/* <h1>{cantidad}</h1> */}
                                   <button
