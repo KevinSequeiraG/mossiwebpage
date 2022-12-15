@@ -67,17 +67,20 @@ const ProductDetailModal = (props) => {
         <h2 className="text-[14px] lg:text-[16px] font-semibold tracking-tight text-gray-900 dark:text-white my-2">
           Lista de ingredientes principales:
         </h2>
-        <ul className="list-disc ml-8 text-[14px] lg:text-[16px] font-semibold tracking-tight text-gray-900 dark:text-white space-y-2 max-h-32 overflow-y-auto">
-          {/* meter el <li></li> en .map*/}
-          {ingredientsForProduct?.map((ingredient) => {
-            return (
-              <div key={ingredient.id} className="flex space-x-1 items-center">
-                <p>*</p>
-                <li key={ingredient.id}>{ingredient.ingredientName}</li>
-              </div>
-            );
+        {/* <ul className="list-disc ml-8 text-[14px] lg:text-[16px] font-semibold tracking-tight text-gray-900 dark:text-white space-y-2 max-h-32 overflow-y-auto">
+          meter el <li></li> en .map
+          {ingredientsForProduct?.map((ingredient, i) => {
+            return <div key={ingredient.id} className="flex space-x-1 items-center"><p key={ingredient.id}>{ingredient.ingredientName}</p><li key={ingredient.id}>{ingredient.ingredientName}</li></div>;
           })}
-        </ul>
+        </ul> */}
+        <div className="flex space-x-1 items-center">
+
+        </div>
+        <p className="text-white text-justify">
+          {ingredientsForProduct?.map((ingredient, i) => {
+            return(""+ ingredient.ingredientName + (ingredientsForProduct.length == i + 1 ? "" : " - "))
+          })}
+        </p>
       </div>
     </div>
   );
