@@ -60,7 +60,7 @@ const NewProductModal = (props) => {
       description: data.description,
       name: data.name,
       totalPrice: totalOfProduct,
-      creationPrice: data.creationPrice,
+      creationPrice: data.creationPrice==""?0:parseFloat(data.creationPrice),
       price: data.price,
       productImgUrl: `${productImageUrl != undefined ? productImageUrl : ""}`,
       ingredientsForProduct: ingredientsToProduct,
@@ -91,11 +91,20 @@ const NewProductModal = (props) => {
       })
     })
     document.getElementById("priceOfProduct").value = parseFloat(total).toFixed(2)
-    var priceOfCreation = parseFloat(document.getElementById("priceOfCreation").value)
-    var ingredientsAndCreation = total + priceOfCreation
+    
+    var priceOfCreation = 0
+    if (parseFloat(document.getElementById("priceOfCreation").value>=0)) {
+      priceOfCreation = parseFloat(document.getElementById("priceOfCreation").value)
+    }
+    var ingredientsAndCreation = parseFloat(total) + parseFloat(priceOfCreation)
 
-    var totalWithIva = (ingredientsAndCreation+(ingredientsAndCreation * 0.13))
-    setTotalOfProduct(totalWithIva)
+    var totalWithIva = (parseFloat(ingredientsAndCreation)+(parseFloat(ingredientsAndCreation) * 0.13))
+    document.getElementById("totalPriceOfProduct").value = parseFloat(totalWithIva).toFixed(2)
+    console.log("object", totalWithIva);
+    console.log(total);
+    console.log(priceOfCreation);
+    console.log(ingredientsAndCreation);
+    //setTotalOfProduct(totalWithIva)
   }
 
   const getIngredients = async (uid) => {
@@ -121,20 +130,25 @@ const NewProductModal = (props) => {
     var precioDeCreacion = e.target.value
 
     if (precioDeProducto == 0) {
-      setTotalOfProduct((parseFloat(precioDeCreacion) + (parseFloat(precioDeCreacion) * 0.13)))
+      document.getElementById("totalPriceOfProduct").value = (parseFloat(precioDeCreacion) + (parseFloat(precioDeCreacion) * 0.13))
     } else {
       var total = (parseFloat(precioDeCreacion) + parseFloat(precioDeProducto))
-      setTotalOfProduct(total + (total * 0.13))
+      document.getElementById("totalPriceOfProduct").value = total + (total * 0.13)
     }
   }
 
   const updateTotalOfProductFromPrice = function (e) {
+    console.log("siu");
     var precioDeCreacion = document.getElementById('priceOfCreation').value
-    var precioDeProducto = e.target.value
+    var precioDeProducto = document.getElementById('priceOfProduct').value
 
     if (precioDeCreacion == 0) {
+      console.log("ar", precioDeProducto);
       setTotalOfProduct(precioDeProducto)
+      var x = document.getElementById('totalPriceOfProduct')
+      x.value = precioDeProducto;
     } else {
+      console.log("en");
       var total = (parseFloat(precioDeProducto) + parseFloat(precioDeCreacion))
       setTotalOfProduct(total)
     }
@@ -147,9 +161,9 @@ const NewProductModal = (props) => {
     priceOfCreationInput.addEventListener('input', updateTotalOfProductFromCreation);
     priceOfCreationInput.addEventListener('propertychange', updateTotalOfProductFromCreation);
 
-    var priceOfProductInput = document.getElementById('priceOfProduct');
-    priceOfProductInput.addEventListener('input', updateTotalOfProductFromPrice);
-    priceOfProductInput.addEventListener('propertychange', updateTotalOfProductFromPrice);
+    // var priceOfProductInput = document.getElementById('priceOfProduct');
+    // priceOfProductInput.addEventListener('input', updateTotalOfProductFromPrice);
+    // priceOfProductInput.addEventListener('propertychange', updateTotalOfProductFromPrice);
   }, []);
 
   useEffect(() => {
@@ -157,7 +171,14 @@ const NewProductModal = (props) => {
       console.log(ingredientUid);
       getIngredients(ingredientUid.id);
     });
-  }, [ingredientsToProduct])
+
+    
+  }, [ingredientsToProduct ])
+
+  useEffect(() => {
+    updateTotalOfProductFromPrice()
+  }, [totalOfProduct])
+  
 
   useEffect(() => {
     getPrice()
@@ -238,7 +259,7 @@ const NewProductModal = (props) => {
                 placeholder="0"
                 min="1"
                 step="any"
-                {...register("creationPrice", { required: true, maxLength: 80 })}
+                {...register("creationPrice", { required: false, maxLength: 80 })}
               />
             </div>
             <div className="flex flex-col lg:flex-row justify-between my-2">
@@ -262,7 +283,7 @@ const NewProductModal = (props) => {
                 placeholder="0"
                 min="1"
                 step="any"
-                value={totalOfProduct}
+                //value={totalOfProduct}
                 {...register("totalPrice", { required: true, maxLength: 80 })}
               />
             </div>
