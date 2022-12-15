@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const ProductDetailModal = (props) => {
   const [ingredientsForProduct, setIngredientsForProduct] = useState([]);
-  var allIngredients = []
+  var allIngredients = [];
 
   const getIngredients = async (uid) => {
     console.log(uid);
@@ -14,7 +14,7 @@ const ProductDetailModal = (props) => {
       var ingredient = { ...ingredient.data(), id: ingredient.id };
       //console.log(ingredient);
       if (!allIngredients.includes(ingredient)) {
-        allIngredients.push(ingredient)
+        allIngredients.push(ingredient);
       }
     });
     console.log(allIngredients);
@@ -26,10 +26,10 @@ const ProductDetailModal = (props) => {
       console.log(ingredientUid);
       getIngredients(ingredientUid.id);
     });
-  }
+  };
 
   useEffect(() => {
-    getIngredientsP()
+    getIngredientsP();
   }, []);
 
   return (
@@ -46,10 +46,18 @@ const ProductDetailModal = (props) => {
       </button>
       <img
         className="rounded-t-lg object-cover max-h-52 min-h-52 w-full h-full"
-        src={props.data.productImgUrl ? props.data.productImgUrl : "https://cdn.shopify.com/s/files/1/0229/0839/files/Untitled_design__1.png?2393&format=jpg&quality=90"}
+        src={
+          props.data.productImgUrl
+            ? props.data.productImgUrl
+            : "https://cdn.shopify.com/s/files/1/0229/0839/files/Untitled_design__1.png?2393&format=jpg&quality=90"
+        }
         alt="product image"
       />
-      <div className="p-5">
+      <div className="p-5 relative">
+        <h1 className="text-[14px] lg:[16px] font-semibold tracking-tight text-gray-900 dark:text-white my-1 text-justify mb-5 absolute right-10 border rounded-lg px-2 py-1">
+          ₡ {parseFloat(props.data.totalPrice).toFixed(2)}
+          
+        </h1>
         <h1 className="text-[16px] lg:text-[20px] font-semibold tracking-tight text-gray-900 dark:text-white text-center border-b w-min mx-auto mb-5">
           {props.data.name}
         </h1>
@@ -62,7 +70,12 @@ const ProductDetailModal = (props) => {
         <ul className="list-disc ml-8 text-[14px] lg:text-[16px] font-semibold tracking-tight text-gray-900 dark:text-white space-y-2 max-h-32 overflow-y-auto">
           {/* meter el <li></li> en .map*/}
           {ingredientsForProduct?.map((ingredient) => {
-            return <div key={ingredient.id} className="flex space-x-1 items-center"><p>*</p><li key={ingredient.id}>{ingredient.ingredientName}</li></div>;
+            return (
+              <div key={ingredient.id} className="flex space-x-1 items-center">
+                <p>*</p>
+                <li key={ingredient.id}>{ingredient.ingredientName}</li>
+              </div>
+            );
           })}
         </ul>
       </div>
