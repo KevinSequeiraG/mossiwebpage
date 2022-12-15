@@ -45,7 +45,7 @@ export default function IngredientRow(props) {
         </td>
         <td className="p-3 text-center">{props.data.ingredientMeasure}</td>
         <td className="p-3 text-center">{props.data.ingredientSupplier}</td>
-        <td className="p-3 text-center">₡{props.data.ingredientPrice}</td>
+        <td className="p-3 text-center">₡{parseFloat(props.data.ingredientPrice).toFixed(2)}</td>
 
         <td className="p-3 text-center space-x-3">
           <a href="#" className="text-yellow-400 hover:text-gray-100">
@@ -68,21 +68,25 @@ export default function IngredientRow(props) {
       </tr>
 
       {openNewIngredientModal ? (
-        <NewIngredientModal
-          closeModal={() => setOpenNewIngredientModal(false)}
-          getIngredientData={() => props.getIngredientData()}
-          data={props.data}
-          isEdit={true}
-        />
+        <div className="w-screen h-screen bg-black bg-opacity-50 left-0 top-0 z-[999] fixed">
+          <NewIngredientModal
+            closeModal={() => setOpenNewIngredientModal(false)}
+            getIngredientData={() => props.getIngredientData()}
+            data={props.data}
+            isEdit={true}
+          />
+        </div>
       ) : null}
       {openDeleteModal ? (
-        <DeleteModal
-          closeModal={() => setDeleteModal(false)}
-          getIngredientData={() => props.getIngredientData()}
-          data={props.data}
-          deleteFunction={deleteIngredient}
-          whatToDelete={"el ingrediente: " + props.data.ingredientName}
-        />
+        <div className="w-screen h-screen bg-black bg-opacity-50 left-0 top-0 z-[999] fixed">
+          <DeleteModal
+            closeModal={() => setDeleteModal(false)}
+            getIngredientData={() => props.getIngredientData()}
+            data={props.data}
+            deleteFunction={deleteIngredient}
+            whatToDelete={"el ingrediente: " + props.data.ingredientName}
+          />
+        </div>
       ) : null}
     </>
   );

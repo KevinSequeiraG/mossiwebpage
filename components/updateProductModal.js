@@ -112,7 +112,7 @@ const UpdateProductModal = (props) => {
         props.closeModal();
         Toast.fire({
           icon: "success",
-          title: `Categoria actualizada`,
+          title: `Producto actualizado`,
         });
         props.getProductData();
       })

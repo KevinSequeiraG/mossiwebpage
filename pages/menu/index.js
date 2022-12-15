@@ -120,7 +120,7 @@ const Menu = () => {
         <Footer />
       </div>
       {showNewCatModal ? (
-        <div className="w-full h-screen bg-black bg-opacity-50 absolute top-0 z-[999] fixed">
+        <div className="w-full h-screen bg-black bg-opacity-50 top-0 z-[999] fixed">
           <NewCategoryModal
             closeModal={closeNewCatModal}
             getCategoryData={getCategoryData}

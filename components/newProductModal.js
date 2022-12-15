@@ -90,7 +90,7 @@ const NewProductModal = (props) => {
         }
       })
     })
-    document.getElementById("priceOfProduct").value = total
+    document.getElementById("priceOfProduct").value = parseFloat(total).toFixed(2)
     var priceOfCreation = parseFloat(document.getElementById("priceOfCreation").value)
     var ingredientsAndCreation = total + priceOfCreation
 

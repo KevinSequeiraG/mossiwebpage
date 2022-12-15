@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import Footer from "../../components/footer";
 import IngredientRow from "../../components/ingredientRow";
@@ -12,7 +12,8 @@ export default function Ingredients() {
   const [openNewIngredientModal, setOpenNewIngredientModal] = useState(false);
   const getIngredientData = async () => {
     const ingredientRef = collection(database, `mossy/data/ingredient`);
-    await getDocs(ingredientRef).then((response) => {
+    const q = query(ingredientRef, orderBy("ingredientName"))
+    await getDocs(q).then((response) => {
       setIngredientData(
         response.docs.map((data) => {
           return { ...data.data(), id: data.id };
@@ -54,7 +55,7 @@ export default function Ingredients() {
                     }}
                     type="text"
                     name="name"
-                    className="
+                    className="pl-1 
               w-1/2 md:w-1/3
               py-1
               border-b-2 border-blue-600
@@ -99,7 +100,7 @@ export default function Ingredients() {
                     </tr>
                   </thead>
                   <tbody>
-                    {ingredientData.map((data,i) => {
+                    {ingredientData.map((data, i) => {
                       if (
                         data.ingredientName
                           .toString()
@@ -110,12 +111,12 @@ export default function Ingredients() {
                           .toLowerCase()
                           .includes(searchInput.toString().toLowerCase())
                       ) {
-                        return (                       
-                            <IngredientRow
-                              key={i}
-                              data={data}
-                              getIngredientData={getIngredientData}
-                            />                   
+                        return (
+                          <IngredientRow
+                            key={i}
+                            data={data}
+                            getIngredientData={getIngredientData}
+                          />
                         );
                       }
                     })}
@@ -129,10 +130,12 @@ export default function Ingredients() {
         <Footer />
       </div>
       {openNewIngredientModal ? (
-        <NewIngredientModal
-          closeModal={() => setOpenNewIngredientModal(false)}
-          getIngredientData={() => getIngredientData()}
-        />
+        <div className="w-full h-screen bg-black bg-opacity-50 top-0 z-[999] fixed">
+          <NewIngredientModal
+            closeModal={() => setOpenNewIngredientModal(false)}
+            getIngredientData={() => getIngredientData()}
+          />
+        </div>
       ) : null}
     </>
   );
