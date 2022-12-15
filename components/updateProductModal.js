@@ -115,6 +115,7 @@ const UpdateProductModal = (props) => {
           title: `Producto actualizado`,
         });
         props.getProductData();
+        window.location.reload(true);
       })
       .catch((err) => {
         console.log(err);
@@ -273,9 +274,9 @@ const UpdateProductModal = (props) => {
                 className="rounded px-2"
                 type="number"
                 placeholder="0"
-                min="1"
+                //min="1"
                 step="any"
-                {...register("creationPrice", { required: true, maxLength: 80 })}
+                {...register("creationPrice", { required: false, maxLength: 80 })}
               />
             </div>
             <div className="flex flex-col lg:flex-row justify-between my-2">
