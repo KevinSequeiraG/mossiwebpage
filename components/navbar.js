@@ -25,13 +25,15 @@ export const NavBar = () => {
         className="bg-white lg:bg-transparent bg-opacity-70 border-gray-200 px-2 sm:px-4 py-2.5 rounded z-50 fixed w-full"
       >
         <div className="container flex flex-wrap justify-between items-center mx-auto">
-          <a href="" className="flex items-center">
-            <img
-              src="../Images/LogoTemp.png"
-              className="w-[3rem] h-[3rem] lg:w-[5rem] lg:h-[5rem]"
-            />
-            {/* <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Mossi Food Service</span> */}
-          </a>
+          <Link href="/">
+            <a className="flex items-center">
+              <img
+                src="../Images/LogoTemp.png"
+                className="w-[3rem] h-[3rem] lg:w-[5rem] lg:h-[5rem]"
+              />
+              {/* <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Mossi Food Service</span> */}
+            </a>
+          </Link>
           <button
             onClick={() => {
               openMenu();
@@ -131,14 +133,14 @@ export const NavBar = () => {
                 </li>
               </Link>
               <Link href={"/contactanos"}>
-              <li className="w-full lg:w-auto py-2 pr-4 pl-3">
-                <a
-                  href="#"
-                  className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white"
-                >
-                  Contáctanos
-                </a>
-              </li>
+                <li className="w-full lg:w-auto py-2 pr-4 pl-3">
+                  <a
+                    href="#"
+                    className="block rounded md:hover:bg-transparent md:border-0 md:p-0 text-gray-700 text-[1rem] hover:text-white"
+                  >
+                    Contáctanos
+                  </a>
+                </li>
               </Link>
               <li className="w-full lg:w-auto py-2 pr-4 pl-3">
                 <SocialMedia />
