@@ -21,8 +21,8 @@ const NewProductModal = (props) => {
   const [categories, setCategories] = useState();
   const [ingredientsToProduct, setIngredientsToProduct] = useState([]);
   const [ingredientsForProduct, setIngredientsForProduct] = useState([]);
-  const [totalOfProduct, setTotalOfProduct] = useState(0)
-  var allIngredients = []
+  const [totalOfProduct, setTotalOfProduct] = useState(0);
+  var allIngredients = [];
 
   const [showSelectIngredientsModal, setShowSelectIngredientsModal] =
     useState(false);
@@ -60,10 +60,12 @@ const NewProductModal = (props) => {
       description: data.description,
       name: data.name,
       totalPrice: totalOfProduct,
-      creationPrice: data.creationPrice==""?0:parseFloat(data.creationPrice),
+      creationPrice:
+        data.creationPrice == "" ? 0 : parseFloat(data.creationPrice),
       price: data.price,
       productImgUrl: `${productImageUrl != undefined ? productImageUrl : ""}`,
       ingredientsForProduct: ingredientsToProduct,
+      priceToShow: data.priceToShow == "" ? 0 : parseFloat(data.priceToShow),
     })
       .then(() => {
         Toast.fire({
@@ -82,30 +84,37 @@ const NewProductModal = (props) => {
   };
 
   const getPrice = () => {
-    var total = 0
-    ingredientsForProduct.map(ingredientInfo => {
-      ingredientsToProduct.map(ingredient => {
+    var total = 0;
+    ingredientsForProduct.map((ingredientInfo) => {
+      ingredientsToProduct.map((ingredient) => {
         if (ingredientInfo.id == ingredient.id) {
-          total += (ingredientInfo.ingredientPrice * ingredient.quantity)
+          total += ingredientInfo.ingredientPrice * ingredient.quantity;
         }
-      })
-    })
-    document.getElementById("priceOfProduct").value = parseFloat(total).toFixed(2)
-    
-    var priceOfCreation = 0
-    if (parseFloat(document.getElementById("priceOfCreation").value>=0)) {
-      priceOfCreation = parseFloat(document.getElementById("priceOfCreation").value)
-    }
-    var ingredientsAndCreation = parseFloat(total) + parseFloat(priceOfCreation)
+      });
+    });
+    document.getElementById("priceOfProduct").value =
+      parseFloat(total).toFixed(2);
 
-    var totalWithIva = (parseFloat(ingredientsAndCreation)+(parseFloat(ingredientsAndCreation) * 0.13))
-    document.getElementById("totalPriceOfProduct").value = parseFloat(totalWithIva).toFixed(2)
+    var priceOfCreation = 0;
+    if (parseFloat(document.getElementById("priceOfCreation").value >= 0)) {
+      priceOfCreation = parseFloat(
+        document.getElementById("priceOfCreation").value
+      );
+    }
+    var ingredientsAndCreation =
+      parseFloat(total) + parseFloat(priceOfCreation);
+
+    var totalWithIva =
+      parseFloat(ingredientsAndCreation) +
+      parseFloat(ingredientsAndCreation) * 0.13;
+    document.getElementById("totalPriceOfProduct").value =
+      parseFloat(totalWithIva).toFixed(2);
     console.log("object", totalWithIva);
     console.log(total);
     console.log(priceOfCreation);
     console.log(ingredientsAndCreation);
     //setTotalOfProduct(totalWithIva)
-  }
+  };
 
   const getIngredients = async (uid) => {
     console.log(uid);
@@ -115,7 +124,7 @@ const NewProductModal = (props) => {
       var ingredient = { ...ingredient.data(), id: ingredient.id };
       //console.log(ingredient);
       if (!allIngredients.includes(ingredient)) {
-        allIngredients.push(ingredient)
+        allIngredients.push(ingredient);
       }
     });
     console.log(allIngredients);
@@ -126,40 +135,48 @@ const NewProductModal = (props) => {
     //result.innerHTML = e.target.value;
     console.log(e.target.value);
 
-    var precioDeProducto = document.getElementById('priceOfProduct').value
-    var precioDeCreacion = e.target.value
+    var precioDeProducto = document.getElementById("priceOfProduct").value;
+    var precioDeCreacion = e.target.value;
 
     if (precioDeProducto == 0) {
-      document.getElementById("totalPriceOfProduct").value = (parseFloat(precioDeCreacion) + (parseFloat(precioDeCreacion) * 0.13))
+      document.getElementById("totalPriceOfProduct").value =
+        parseFloat(precioDeCreacion) + parseFloat(precioDeCreacion) * 0.13;
     } else {
-      var total = (parseFloat(precioDeCreacion) + parseFloat(precioDeProducto))
-      document.getElementById("totalPriceOfProduct").value = total + (total * 0.13)
+      var total = parseFloat(precioDeCreacion) + parseFloat(precioDeProducto);
+      document.getElementById("totalPriceOfProduct").value =
+        total + total * 0.13;
     }
-  }
+  };
 
   const updateTotalOfProductFromPrice = function (e) {
     console.log("siu");
-    var precioDeCreacion = document.getElementById('priceOfCreation').value
-    var precioDeProducto = document.getElementById('priceOfProduct').value
+    var precioDeCreacion = document.getElementById("priceOfCreation").value;
+    var precioDeProducto = document.getElementById("priceOfProduct").value;
 
     if (precioDeCreacion == 0) {
       console.log("ar", precioDeProducto);
-      setTotalOfProduct(precioDeProducto)
-      var x = document.getElementById('totalPriceOfProduct')
+      setTotalOfProduct(precioDeProducto);
+      var x = document.getElementById("totalPriceOfProduct");
       x.value = precioDeProducto;
     } else {
       console.log("en");
-      var total = (parseFloat(precioDeProducto) + parseFloat(precioDeCreacion))
-      setTotalOfProduct(total)
+      var total = parseFloat(precioDeProducto) + parseFloat(precioDeCreacion);
+      setTotalOfProduct(total);
     }
-  }
+  };
 
   useEffect(() => {
     getCategoriesData();
 
-    var priceOfCreationInput = document.getElementById('priceOfCreation');
-    priceOfCreationInput.addEventListener('input', updateTotalOfProductFromCreation);
-    priceOfCreationInput.addEventListener('propertychange', updateTotalOfProductFromCreation);
+    var priceOfCreationInput = document.getElementById("priceOfCreation");
+    priceOfCreationInput.addEventListener(
+      "input",
+      updateTotalOfProductFromCreation
+    );
+    priceOfCreationInput.addEventListener(
+      "propertychange",
+      updateTotalOfProductFromCreation
+    );
 
     // var priceOfProductInput = document.getElementById('priceOfProduct');
     // priceOfProductInput.addEventListener('input', updateTotalOfProductFromPrice);
@@ -171,34 +188,29 @@ const NewProductModal = (props) => {
       console.log(ingredientUid);
       getIngredients(ingredientUid.id);
     });
-
-    
-  }, [ingredientsToProduct ])
+  }, [ingredientsToProduct]);
 
   useEffect(() => {
-    updateTotalOfProductFromPrice()
-  }, [totalOfProduct])
-  
+    updateTotalOfProductFromPrice();
+  }, [totalOfProduct]);
 
   useEffect(() => {
-    getPrice()
-  }, [allIngredients])
-
-
+    getPrice();
+  }, [allIngredients]);
 
   return (
     <>
       <div className="w-5/6 md:w-[60%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
-      <button
-        onClick={() => {
-          props.closeModal();
-        }}
-        className="absolute -right-5 -top-5 lg:-right-10 lg:-top-10 bg-red-500 text-white rounded-[50%] border border-white w-[2rem] lg:w-[4rem] z-[9999] h-[2rem] lg:h-[4rem] mx-2 hover:bg-red-800"
-      >
-        <span className="material-icons !text-[15px] mt-1 lg:!text-[50px]">
-          close
-        </span>
-      </button>
+        <button
+          onClick={() => {
+            props.closeModal();
+          }}
+          className="absolute -right-5 -top-5 lg:-right-10 lg:-top-10 bg-red-500 text-white rounded-[50%] border border-white w-[2rem] lg:w-[4rem] z-[9999] h-[2rem] lg:h-[4rem] mx-2 hover:bg-red-800"
+        >
+          <span className="material-icons !text-[15px] mt-1 lg:!text-[50px]">
+            close
+          </span>
+        </button>
         <div className="max-h-96 flex-col overflow-y-auto overflow-x-hidden scrollbar">
           <p className="text-center text-[18px] lg:text-[1.5rem] text-white">
             Acá agregas un nuevo producto
@@ -259,7 +271,10 @@ const NewProductModal = (props) => {
                 placeholder="0"
                 min="1"
                 step="any"
-                {...register("creationPrice", { required: false, maxLength: 80 })}
+                {...register("creationPrice", {
+                  required: false,
+                  maxLength: 80,
+                })}
               />
             </div>
             <div className="flex flex-col lg:flex-row justify-between my-2">
@@ -275,7 +290,9 @@ const NewProductModal = (props) => {
               />
             </div>
             <div className="flex flex-col lg:flex-row justify-between my-2">
-              <label className="text-white">Precio final del producto (auto)</label>
+              <label className="text-white">
+                Precio final del producto (auto)
+              </label>
               <input
                 id="totalPriceOfProduct"
                 className="rounded px-2"
@@ -309,6 +326,18 @@ const NewProductModal = (props) => {
                 className="text-[1rem] px-2 py-1 bg-green-600 text-white rounded-xl hover:bg-green-700 hover:cursor-pointer"
                 type="button"
                 value={"+ Asociar ingredientes"}
+              />
+            </div>
+            <div className="flex flex-col lg:flex-row justify-between my-2">
+              <label className="text-white">Precio a mostrar al cliente</label>
+              <input
+                id="priceToShow"
+                className="rounded px-2"
+                type="number"
+                placeholder="0"
+                min="1"
+                step="any"
+                {...register("priceToShow", { required: false, maxLength: 80 })}
               />
             </div>
             <input

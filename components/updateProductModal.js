@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { database } from "../lib/firebaseConfig";
 import Swal from "sweetalert2";
 import ImageUplaod from "./imageUpload";
@@ -12,25 +18,37 @@ const UpdateProductModal = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  var allIngredients = []
+  var allIngredients = [];
   const [ingredientsForProduct, setIngredientsForProduct] = useState([]);
   const [name, setName] = useState(props.data.name);
   const [description, setDescription] = useState(props.data.description);
   const [categoryId, setCategoryId] = useState(props.data.categoryId);
   const [categoryName, setCategoryName] = useState();
-  const [priceOfCreation, setPriceOfCreation] = useState(props.data.creationPrice);
+  const [priceOfCreation, setPriceOfCreation] = useState(
+    props.data.creationPrice
+  );
+  const [priceToShow, setPriceToShow] = useState(
+    props.data.priceToShow
+  );
   const [priceOfProduct, setPriceOfProduct] = useState(props.data.price);
-  const [totalPriceOfProduct, setTotalPriceOfProduct] = useState(props.data.totalPrice);
+  const [totalPriceOfProduct, setTotalPriceOfProduct] = useState(
+    props.data.totalPrice
+  );
   const [categories, setCategories] = useState();
   const [productImage, setProductImage] = useState(props.data.productImgUrl);
   //const [totalOfProduct, setTotalOfProduct] = useState(0)
-  const [ingredientsToProduct, setIngredientsToProduct] = useState(props.data.ingredientsForProduct);
+  const [ingredientsToProduct, setIngredientsToProduct] = useState(
+    props.data.ingredientsForProduct
+  );
   const [productImageUrl, setProductImageUrl] = useState(
     props.data.productImgUrl
   );
-  const [showSelectIngredientsModal, setShowSelectIngredientsModal] = useState(false);
+  const [showSelectIngredientsModal, setShowSelectIngredientsModal] =
+    useState(false);
 
-  const [ingredientesWithQuantity, setIngredientesWithQuantity] = useState(props.data.ingredientsForProduct)
+  const [ingredientesWithQuantity, setIngredientesWithQuantity] = useState(
+    props.data.ingredientsForProduct
+  );
 
   const getCategoriesData = async () => {
     const categoriesRef = collection(database, `mossy/data/category`);
@@ -51,7 +69,7 @@ const UpdateProductModal = (props) => {
       var ingredient = { ...ingredient.data(), id: ingredient.id };
       //console.log(ingredient);
       if (!allIngredients.includes(ingredient)) {
-        allIngredients.push(ingredient)
+        allIngredients.push(ingredient);
       }
     });
     console.log(allIngredients);
@@ -63,16 +81,22 @@ const UpdateProductModal = (props) => {
       console.log(ingredientUid);
       getIngredients(ingredientUid.id);
     });
-  }
+  };
 
   useEffect(() => {
     console.log(props.data);
     getCategoriesData();
-    getIngredientsP()
+    getIngredientsP();
 
-    var priceOfCreationInput = document.getElementById('priceOfCreation');
-    priceOfCreationInput.addEventListener('input', updateTotalOfProductFromCreation);
-    priceOfCreationInput.addEventListener('propertychange', updateTotalOfProductFromCreation);
+    var priceOfCreationInput = document.getElementById("priceOfCreation");
+    priceOfCreationInput.addEventListener(
+      "input",
+      updateTotalOfProductFromCreation
+    );
+    priceOfCreationInput.addEventListener(
+      "propertychange",
+      updateTotalOfProductFromCreation
+    );
 
     // var priceOfProductInput = document.getElementById('priceOfProduct');
     // priceOfProductInput.addEventListener('input', updateTotalOfProductFromPrice);
@@ -107,6 +131,7 @@ const UpdateProductModal = (props) => {
       price: priceOfProduct,
       ingredientsForProduct: ingredientsToProduct,
       productImgUrl: `${productImageUrl != undefined ? productImageUrl : ""}`,
+      priceToShow: data.priceToShow == "" ? 0 : parseFloat(data.priceToShow),
     })
       .then(() => {
         props.closeModal();
@@ -130,16 +155,18 @@ const UpdateProductModal = (props) => {
     //result.innerHTML = e.target.value;
     console.log(e.target.value);
 
-    var precioDeProducto = document.getElementById('priceOfProduct').value
-    var precioDeCreacion = e.target.value
+    var precioDeProducto = document.getElementById("priceOfProduct").value;
+    var precioDeCreacion = e.target.value;
 
     if (precioDeProducto == 0) {
-      setTotalPriceOfProduct((parseFloat(precioDeCreacion) + (parseFloat(precioDeCreacion) * 0.13)))
+      setTotalPriceOfProduct(
+        parseFloat(precioDeCreacion) + parseFloat(precioDeCreacion) * 0.13
+      );
     } else {
-      var total = (parseFloat(precioDeCreacion) + parseFloat(precioDeProducto))
-      setTotalPriceOfProduct(total + (total * 0.13))
+      var total = parseFloat(precioDeCreacion) + parseFloat(precioDeProducto);
+      setTotalPriceOfProduct(total + total * 0.13);
     }
-  }
+  };
 
   // const updateTotalOfProductFromPrice = function (e) {
   //   console.log(e.target.value);
@@ -155,40 +182,42 @@ const UpdateProductModal = (props) => {
   // }
 
   useEffect(() => {
-    var newArray = []
-    var priceOfProds = 0
-    ingredientsToProduct.map(ingredient => {
-      ingredientsForProduct.map(ingredient2 => {
+    var newArray = [];
+    var priceOfProds = 0;
+    ingredientsToProduct.map((ingredient) => {
+      ingredientsForProduct.map((ingredient2) => {
         if (ingredient.id == ingredient2.id) {
-          var ingrendientData = { ...ingredient2, quantity: ingredient.quantity }
-          newArray.push(ingrendientData)
+          var ingrendientData = {
+            ...ingredient2,
+            quantity: ingredient.quantity,
+          };
+          newArray.push(ingrendientData);
         }
-      })
-    })
-    newArray.map(ingredient => {
-      priceOfProds += (parseFloat(ingredient.ingredientPrice) * ingredient.quantity)
-    })
+      });
+    });
+    newArray.map((ingredient) => {
+      priceOfProds +=
+        parseFloat(ingredient.ingredientPrice) * ingredient.quantity;
+    });
 
-    setIngredientesWithQuantity(newArray)
-    setPriceOfProduct(priceOfProds)
+    setIngredientesWithQuantity(newArray);
+    setPriceOfProduct(priceOfProds);
 
-    var total = (parseFloat(priceOfProds) + parseFloat(priceOfCreation))
-    var totalWithIva = total + (total*0.13)
-    setTotalPriceOfProduct(totalWithIva)
+    var total = parseFloat(priceOfProds) + parseFloat(priceOfCreation);
+    var totalWithIva = total + total * 0.13;
+    setTotalPriceOfProduct(totalWithIva);
     console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZ", newArray);
-
-  }, [ingredientsForProduct])
+  }, [ingredientsForProduct]);
 
   const handleSetIngredientsToProduct = (lista) => {
     console.log("lista", lista);
-    setIngredientsToProduct(lista)
+    setIngredientsToProduct(lista);
 
     lista.map((ingredientUid, i) => {
       console.log(ingredientUid);
       getIngredients(ingredientUid.id);
     });
-  }
-
+  };
 
   // useEffect(() => {
   //   console.log("ingre", ingredientsToProduct);
@@ -201,20 +230,19 @@ const UpdateProductModal = (props) => {
 
   // }, [ingredientsToProduct])
 
-
   return (
     <>
       <div className="w-5/6 md:w-[40%] h-auto bg-gray-800 border-2 border-gray-300 absolute top-1/2 left-1/2 z-[1000] translate-x-[-50%] translate-y-[-50%] rounded-lg py-5">
         <button
-        onClick={() => {
-          props.closeModal();
-        }}
-        className="absolute -right-5 -top-5 lg:-right-10 lg:-top-10 bg-red-500 text-white rounded-[50%] border border-white w-[2rem] lg:w-[4rem] z-[9999] h-[2rem] lg:h-[4rem] mx-2 hover:bg-red-800"
-      >
-        <span className="material-icons !text-[15px] mt-1 lg:!text-[50px]">
-          close
-        </span>
-      </button>
+          onClick={() => {
+            props.closeModal();
+          }}
+          className="absolute -right-5 -top-5 lg:-right-10 lg:-top-10 bg-red-500 text-white rounded-[50%] border border-white w-[2rem] lg:w-[4rem] z-[9999] h-[2rem] lg:h-[4rem] mx-2 hover:bg-red-800"
+        >
+          <span className="material-icons !text-[15px] mt-1 lg:!text-[50px]">
+            close
+          </span>
+        </button>
         <div className="max-h-96 flex-col overflow-y-auto overflow-x-hidden scrollbar">
           <p className="text-center text-[18px] lg:text-[1.5rem] text-white">
             Acá actualizás un producto
@@ -248,7 +276,9 @@ const UpdateProductModal = (props) => {
                       onClick={() => setCategoryName(categorie.id)}
                       key={categorie.id}
                       value={categorie.id}
-                      selected={categorie.id==props.data.categoryId?true:false}
+                      selected={
+                        categorie.id == props.data.categoryId ? true : false
+                      }
                     >
                       {categorie.categoryName}
                     </option>
@@ -276,7 +306,10 @@ const UpdateProductModal = (props) => {
                 placeholder="0"
                 //min="1"
                 step="any"
-                {...register("creationPrice", { required: false, maxLength: 80 })}
+                {...register("creationPrice", {
+                  required: false,
+                  maxLength: 80,
+                })}
               />
             </div>
             <div className="flex flex-col lg:flex-row justify-between my-2">
@@ -294,7 +327,9 @@ const UpdateProductModal = (props) => {
               />
             </div>
             <div className="flex flex-col lg:flex-row justify-between my-2">
-              <label className="text-white">Precio final del producto (auto)</label>
+              <label className="text-white">
+                Precio final del producto (auto)
+              </label>
               <input
                 defaultValue={totalPriceOfProduct}
                 value={totalPriceOfProduct}
@@ -307,6 +342,7 @@ const UpdateProductModal = (props) => {
                 {...register("totalPrice", { required: true, maxLength: 80 })}
               />
             </div>
+
             {/* <div className="flex flex-col lg:flex-row justify-between my-2">
             <label className="text-white">Precio de producto</label>
             <input
@@ -335,7 +371,10 @@ const UpdateProductModal = (props) => {
                 <br />
                 <button
                   className="hover:bg-yellow-500 bg-yellow-600 px-2 py-1 border border-white rounded-lg my-2 text-[14px]"
-                  onClick={() => { event.preventDefault(); setShowSelectIngredientsModal(true) }}
+                  onClick={() => {
+                    event.preventDefault();
+                    setShowSelectIngredientsModal(true);
+                  }}
                 >
                   Editar lista de ingredientes
                 </button>
@@ -343,14 +382,14 @@ const UpdateProductModal = (props) => {
               <div className="flex flex-row">
                 <div className="mr-3">
                   <h1>Nombre</h1>
-                  {ingredientesWithQuantity.map(product => {
-                    return (<h1 key={product.id}>{product.ingredientName}</h1>)
+                  {ingredientesWithQuantity.map((product) => {
+                    return <h1 key={product.id}>{product.ingredientName}</h1>;
                   })}
                 </div>
                 <div className="ml-3">
                   <h1>Cantidad</h1>
-                  {ingredientesWithQuantity.map(product => {
-                    return (<h1 key={product.id}>{product.quantity}</h1>)
+                  {ingredientesWithQuantity.map((product) => {
+                    return <h1 key={product.id}>{product.quantity}</h1>;
                   })}
                 </div>
               </div>
@@ -362,6 +401,22 @@ const UpdateProductModal = (props) => {
               {...register("description", { required: true, maxLength: 100 })}
             /> */}
             </div>
+            <div className="flex flex-col lg:flex-row justify-between my-2">
+              <label className="text-white">Precio a mostrar al cliente</label>
+              <input
+               defaultValue={priceToShow}
+               id="priceToShow"
+               className="rounded px-2"
+               type="number"
+               placeholder="0"
+               //min="1"
+               step="any"
+               {...register("priceToShow", {
+                 required: false,
+                 maxLength: 80,
+               })}
+              />
+            </div>
             {/* <input value={props.productId} className='hidden' type="textarea" placeholder="id" {...register("id", { required: true, maxLength: 100 })} /> */}
             <input
               className="text-[1rem] mt-4 lg:mt-8 px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-700"
@@ -370,7 +425,6 @@ const UpdateProductModal = (props) => {
             />
           </form>
         </div>
-
       </div>
       {showSelectIngredientsModal ? (
         <SelectIngredientsModal
