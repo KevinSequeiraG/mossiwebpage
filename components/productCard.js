@@ -136,7 +136,7 @@ const ProductCard = (props) => {
 
           <div className="flex justify-between items-center">
             <span className="text-[14px] lg:text-[15px] font-bold text-gray-900 dark:text-white">
-              ₡ {totalOfProduct}
+              ₡ {totalOfProduct.toFixed(2)}
             </span>
             <div
               onClick={() => {
