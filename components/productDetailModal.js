@@ -45,7 +45,7 @@ const ProductDetailModal = (props) => {
         </span>
       </button>
       <img
-        className="rounded-t-lg object-cover max-h-52 min-h-52 w-full h-full"
+        className="rounded-t-lg object-cover max-h-44 min-h-44 lg:max-h-64 lg:min-h-64 w-full h-full"
         src={
           props.data.productImgUrl
             ? props.data.productImgUrl
@@ -58,7 +58,7 @@ const ProductDetailModal = (props) => {
           ₡ {parseFloat(props.data.priceToShow).toFixed(2)}
           
         </h1>
-        <h1 className="text-[16px] lg:text-[20px] font-semibold tracking-tight text-gray-900 dark:text-white text-center border-b w-min mx-auto mb-5">
+        <h1 className="text-[16px] lg:text-[20px] font-semibold tracking-tight text-gray-900 dark:text-white text-left lg:text-center border-b w-min ml-0 lg:mx-auto mb-5">
           {props.data.name}
         </h1>
         <h2 className="text-[14px] lg:[16px] font-semibold tracking-tight text-gray-900 dark:text-white my-1 text-justify mb-5">
@@ -76,7 +76,7 @@ const ProductDetailModal = (props) => {
         <div className="flex space-x-1 items-center">
 
         </div>
-        <p className="text-white text-justify">
+        <p className="text-white text-left max-h-56 overflow-y-auto scrollbar lg:max-h-full px-5">
           {ingredientsForProduct?.map((ingredient, i) => {
             return(""+ ingredient.ingredientName + (ingredientsForProduct.length == i + 1 ? "" : " - "))
           })}
